@@ -9,4 +9,16 @@ git branch dev
 git checkout dev
 git push -u origin dev
 ```
-
+# Project setup
+```
+cd backend
+npm init -y
+npm install express # More dependencies to be added here...
+npm install nodemon -D # For development purposes
+```
+Add this to package.json scripts section:
+```
+"start": "nodejs index.js",
+"dev": "nodemon index.js"
+```
+Run with `npm run dev`
