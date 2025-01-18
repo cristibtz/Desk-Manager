@@ -13,12 +13,20 @@ git push -u origin dev
 ```
 cd backend
 npm init -y
-npm install express # More dependencies to be added here...
-npm install nodemon -D # For development purposes
+npm install # Installs all dependencies from package.json
 ```
-Add this to package.json scripts section:
-```
-"start": "nodejs index.js",
-"dev": "nodemon index.js"
-```
+
 Run with `npm run dev`
+
+# Database setup
+Postgres database should initially be ran with docker using:
+`docker run --name app-db -e POSTGRES_USER="whatever" -e POSTGRES_PASSWORD="whatever" -e POSTGRES_DB="resource-manager" -p 5432:5432 postgres:latest`
+
+Credentials will be read from a `.env` file which must be created in the `backend/` directory and should have the following fields:
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=whatever
+DB_PASS=whatever
+DB_NAME=resource-manager
+```
