@@ -30,3 +30,9 @@ DB_USER=whatever
 DB_PASS=whatever
 DB_NAME=resource-manager
 ```
+Create tables and use dummy data:
+```
+cd database
+npx sequelize-cli db:migrate # Migration
+npx sequelize-cli db:seed:all # Dummy data
+```
