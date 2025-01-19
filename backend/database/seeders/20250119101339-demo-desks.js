@@ -6,61 +6,61 @@ module.exports = {
     await queryInterface.bulkInsert('Desks', [
       {
         desk_number: 1,
-        room_id: 4,
+        room_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
         
       },
       {
         desk_number: 2,
-        room_id: 4,
+        room_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
         
       },
       {
         desk_number: 3,
-        room_id: 4,
+        room_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         desk_number: 1,
-        room_id: 5,
+        room_id: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
         
       },
       {
         desk_number: 2,
-        room_id: 5,
+        room_id: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
         
       },
       {
         desk_number: 3,
-        room_id: 5,
+        room_id: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         desk_number: 1,
-        room_id: 6,
+        room_id: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
         
       },
       {
         desk_number: 2,
-        room_id: 6,
+        room_id: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
         
       },
       {
         desk_number: 3,
-        room_id: 6,
+        room_id: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       }

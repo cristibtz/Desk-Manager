@@ -1,6 +1,7 @@
 const express = require('express')
 const db = require('./database/database.js');
-const adminRoutes = require('./routes/adminRoutes');
+const adminGetRoutes = require('./routes/adminGetRoutes');
+const adminPostRoutes = require('./routes/adminPostRoutes');
 
 const app = express()
 const port = 3000
@@ -9,7 +10,9 @@ const port = 3000
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(adminRoutes);
+//Routes
+app.use(adminGetRoutes);
+app.use(adminPostRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
