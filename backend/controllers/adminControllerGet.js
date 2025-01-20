@@ -27,7 +27,7 @@ exports.getReservations = async (req, res) => {
 }
 
 exports.getReservation = [    
-    param('item').isInt().withMessage('Item must be an integer'),
+    param('reservation_id').isInt().withMessage('Item must be an integer'),
 
     async (req, res) => {
 
@@ -37,7 +37,7 @@ exports.getReservation = [
         }
 
         try {
-            const reservationId = req.params.item;
+            const reservationId = req.params.reservation_id;
 
             const reservation = await Reservations.findByPk(reservationId, {
                 attributes: [ 'id', 'user_id', 'room_id', 'desk_id', 'start_date', 'end_date', 'note'],
@@ -80,7 +80,7 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.getUser = [    
-    param('item').isInt().withMessage('Item must be an integer'),
+    param('user_id').isInt().withMessage('Item must be an integer'),
 
     async (req, res) => {
 
@@ -90,7 +90,7 @@ exports.getUser = [
         }
 
         try {
-            const userId = req.params.item;
+            const userId = req.params.user_id;
 
             const user = await Users.findByPk(userId, {
                 attributes: [ 'id', 'username', 'email'],
@@ -111,7 +111,7 @@ exports.getUser = [
 ]
 
 exports.getUserReservations = [
-    param('item').isInt().withMessage('Item must be an integer'),
+    param('user_id').isInt().withMessage('Item must be an integer'),
 
     async (req, res) => {
         const errors = validationResult(req);
@@ -120,7 +120,7 @@ exports.getUserReservations = [
         }
 
         try {
-            const userId = req.params.item;
+            const userId = req.params.user_id;
 
             const userReservations = await Reservations.findAll({
                 where: {
@@ -167,7 +167,7 @@ exports.getRooms = async (req, res) => {
 }
 
 exports.getRoom = [
-    param('item').isInt().withMessage('Item must be an integer'),
+    param('room_number').isInt().withMessage('Item must be an integer'),
 
     async (req, res) => {
         const errors = validationResult(req);
@@ -176,7 +176,7 @@ exports.getRoom = [
         }
 
         try {
-            const roomNumber = req.params.item;
+            const roomNumber = req.params.room_number;
 
             const room = await Rooms.findOne({
                 where: { 
@@ -200,7 +200,7 @@ exports.getRoom = [
 ]
 
 exports.getRoomDesks = [
-    param('item').isInt().withMessage('Item must be an integer'),
+    param('room_id').isInt().withMessage('Item must be an integer'),
 
     async (req, res) => {
         const errors = validationResult(req);
@@ -209,7 +209,7 @@ exports.getRoomDesks = [
         }
 
         try {
-            const roomId = req.params.item;
+            const roomId = req.params.room_id;
 
             const roomDesks = await Desks.findAll({
                 where: {
@@ -255,7 +255,7 @@ exports.getDesks = async (req, res) => {
 }
 
 exports.getDesk = [
-    param('item').isInt().withMessage('Item must be an integer'),
+    param('desk_id').isInt().withMessage('Item must be an integer'),
 
 
     async (req, res) => {
@@ -265,7 +265,7 @@ exports.getDesk = [
         }
 
         try {
-            const deskId = req.params.item;
+            const deskId = req.params.desk_id;
 
             const desk = await Desks.findByPk(deskId, {
                 attributes: [ 'id', 'desk_number', 'room_id'],
