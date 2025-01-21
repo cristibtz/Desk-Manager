@@ -36,3 +36,11 @@ cd database
 npx sequelize-cli db:migrate # Migration
 npx sequelize-cli db:seed:all # Dummy data
 ```
+
+Summary of the API endpoints of the app and their purpose
+
+>Admin endpoints
+![photo](photos/photo-1.png)
+
+>User endpoints
+![photo](photos/photo-2.png)
