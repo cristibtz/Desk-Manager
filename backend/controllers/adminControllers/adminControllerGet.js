@@ -1,8 +1,8 @@
-const db = require("../database/database")
-const Users = require("../database/models").Users;
-const Rooms = require("../database/models").Rooms;
-const Desks = require("../database/models").Desks;
-const Reservations = require("../database/models").Reservations;
+const db = require("../../database/database")
+const Users = require("../../database/models").Users;
+const Rooms = require("../../database/models").Rooms;
+const Desks = require("../../database/models").Desks;
+const Reservations = require("../../database/models").Reservations;
 
 const { param, validationResult } = require('express-validator');
 
@@ -21,6 +21,7 @@ exports.getReservations = async (req, res) => {
         res.status(200).send(JSON.stringify(reservations, null, 2));    
     } catch(error) {
         console.log(error);
+        res.setHeader('Content-Type', 'application/json');
         res.status(500).json({message:"Internal Server Error"}); 
     }
 
@@ -33,6 +34,7 @@ exports.getReservation = [
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({message:"Bad request"});
         }
 
@@ -44,6 +46,7 @@ exports.getReservation = [
             })
 
             if(!reservation){
+                res.setHeader('Content-Type', 'application/json');
                 return res.status(404).json({message:"Reservation not found"});
             }
 
@@ -52,6 +55,7 @@ exports.getReservation = [
 
         } catch(error) {
             console.log(error);
+            res.setHeader('Content-Type', 'application/json');
             res.status(500).json({message:"Internal Server Error"}); 
         }
     }
@@ -74,6 +78,7 @@ exports.getUsers = async (req, res) => {
 
     } catch(error) {
         console.log(error);
+        res.setHeader('Content-Type', 'application/json');
         res.status(500).json({message:"Internal Server Error"}); 
     }
 
@@ -86,6 +91,7 @@ exports.getUser = [
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({message:"Bad request"});
         }
 
@@ -97,6 +103,7 @@ exports.getUser = [
             })
 
             if(!user){
+                res.setHeader('Content-Type', 'application/json');
                 return res.status(404).json({message:"User not found"});
             }
 
@@ -105,6 +112,7 @@ exports.getUser = [
 
         } catch(error) {
             console.log(error);
+            res.setHeader('Content-Type', 'application/json');
             res.status(500).json({message:"Internal Server Error"}); 
         }
     }
@@ -116,6 +124,7 @@ exports.getUserReservations = [
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({message:"Bad request"});
         }
 
@@ -131,6 +140,7 @@ exports.getUserReservations = [
             })
 
             if(userReservations.length === 0){
+                res.setHeader('Content-Type', 'application/json');
                 return res.status(404).json({message:"User's reservations not found"});
             }
 
@@ -139,6 +149,7 @@ exports.getUserReservations = [
 
         } catch(error) {
             console.log(error);
+            res.setHeader('Content-Type', 'application/json');
             res.status(500).json({message:"Internal Server Error"}); 
         }
     }
@@ -154,6 +165,7 @@ exports.getRooms = async (req, res) => {
         });
         
         if (rooms.length === 0){
+            res.setHeader('Content-Type', 'application/json');
             return res.status(404).json({message:"No rooms found"});
         }
 
@@ -162,6 +174,7 @@ exports.getRooms = async (req, res) => {
 
     } catch(error) {
         console.log(error);
+        res.setHeader('Content-Type', 'application/json');
         res.status(500).json({message:"Internal Server Error"}); 
     }
 }
@@ -172,6 +185,7 @@ exports.getRoom = [
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({message:"Bad request"});
         }
 
@@ -186,6 +200,7 @@ exports.getRoom = [
             } )
 
             if(!room){
+                res.setHeader('Content-Type', 'application/json');
                 return res.status(404).json({message:"Room not found"});
             }
 
@@ -194,6 +209,7 @@ exports.getRoom = [
 
         } catch(error) {
             console.log(error);
+            res.setHeader('Content-Type', 'application/json');
             res.status(500).json({message:"Internal Server Error"}); 
         }
     }
@@ -205,6 +221,7 @@ exports.getRoomDesks = [
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({message:"Bad request"});
         }
 
@@ -220,6 +237,7 @@ exports.getRoomDesks = [
             })
 
             if(roomDesks.length === 0) {
+                res.setHeader('Content-Type', 'application/json');
                 return res.status(404).json({message:"No room's desks found"});
             }
 
@@ -228,6 +246,7 @@ exports.getRoomDesks = [
 
         } catch(error) {
             console.log(error);
+            res.setHeader('Content-Type', 'application/json');
             res.status(500).json({message:"Internal Server Error"});
         }
     }
@@ -250,6 +269,7 @@ exports.getDesks = async (req, res) => {
 
     } catch(error) {
         console.log(error);
+        res.setHeader('Content-Type', 'application/json');
         res.status(500).json({message:"Internal Server Error"}); 
     }
 }
@@ -261,6 +281,7 @@ exports.getDesk = [
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({message:"Bad request"});
         }
 
@@ -280,6 +301,7 @@ exports.getDesk = [
 
         } catch(error) {
             console.log(error);
+            res.setHeader('Content-Type', 'application/json');
             res.status(500).json({message:"Internal Server Error"}); 
         }
     }

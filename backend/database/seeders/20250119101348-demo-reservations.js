@@ -29,7 +29,7 @@ module.exports = {
       {
         user_id: 2,
         room_id: 2,
-        desk_id: 1,
+        desk_id: 4,
         start_date: new Date("2025-02-19 11:00:00.000+00"),
         end_date: new Date("2025-02-19 12:00:00.000+00"),
         note: "Browse the web",
@@ -39,7 +39,7 @@ module.exports = {
       {
         user_id: 2,
         room_id: 2,
-        desk_id: 2,
+        desk_id: 5,
         start_date: new Date("2025-02-19 14:00:00.000+00"),
         end_date: new Date("2025-02-19 15:00:00.000+00"),
         note: "Browse the web",
@@ -50,7 +50,7 @@ module.exports = {
       {
         user_id: 3,
         room_id: 3,
-        desk_id: 1,
+        desk_id: 7,
         start_date: new Date("2025-02-19 08:00:00.000+00"),
         end_date: "2025-02-19 10:00:00.000+00",
         note: "Coffe and mails",
@@ -61,7 +61,7 @@ module.exports = {
       {
         user_id: 3,
         room_id: 3,
-        desk_id: 2,
+        desk_id: 8,
         start_date: new Date("2025-02-19 14:00:00.000+00"),
         end_date: new Date("2025-02-19 16:00:00.000+00"),
         note: "Coffe and mails",

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const adminControllerGet = require('../controllers/adminControllerGet');
+const adminControllerGet = require('../../controllers/adminControllers/adminControllerGet');
 
 //GET
 //Reservations routes
