@@ -29,6 +29,11 @@ DB_PORT=5432
 DB_USER=whatever
 DB_PASS=whatever
 DB_NAME=resource-manager
+APP_SECRET=secret
+KEYCLOAK_REALM="resource-manager"
+KEYCLOAK_CLIENT="resource-manager"
+KEYCLOAK_URL="http://localhost:8080/"
+KEYCLOAK_SECRET="secret_from_the_oidc_json_file"
 ```
 Create tables and use dummy data:
 ```
@@ -37,10 +42,17 @@ npx sequelize-cli db:migrate # Migration
 npx sequelize-cli db:seed:all # Dummy data
 ```
 
-Summary of the API endpoints of the app and their purpose
+# Summary of the API endpoints of the app and their purpose
 
 >Admin endpoints
 ![photo](photos/photo-1.png)
 
 >User endpoints
 ![photo](photos/photo-2.png)
+
+# Authentication server setup
+
+Docker command to run Keycloak
+```
+docker run -d --name keycloak -p 8080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.0 start-dev
+```
