@@ -3,7 +3,7 @@ const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const db = require('./database/database.js');
 require('dotenv').config();
-const { keycloak, exported_session, parseToken } = require('./auth/auth.js');
+const { keycloak, exported_session, parseToken, syncNewUsers } = require('./auth/auth.js');
 
 const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
 const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
@@ -40,9 +40,10 @@ app.use( keycloak.middleware({
 }));
 
 app.get('/', (req, res) => {
-  //Maybe add here the function that will synchronize keycloak users with my db, because
-  //I will need the user's id to make the requests to the db
-  //and also / is frequently accessed
+
+  //To sync the users when '/' is accessed
+  syncNewUsers();
+
   res.render('landing');
 });
 

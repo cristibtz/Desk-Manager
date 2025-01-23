@@ -34,7 +34,11 @@ KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
 KEYCLOAK_URL="http://localhost:8080/"
 KEYCLOAK_SECRET="secret_from_the_oidc_json_file"
+KEYCLOAK_CLI_ADMIN="admin_user_of_the_resource-manager_app"
+KEYCLOAK_CLI_ADMIN_PASS=whatever
 ```
+>The user which will access Keycloak via admin-cli must have view-users role assigned
+
 Create tables and use dummy data:
 ```
 cd database

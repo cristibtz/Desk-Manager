@@ -1,6 +1,8 @@
 const session = require('express-session');
 const Keycloak = require('keycloak-connect');
 const dotenv = require('dotenv').config({path: '../.env'});
+const Users = require("../database/models").Users;
+const KeycloakAdminClient = require('@keycloak/keycloak-admin-client').default;
 
 const memoryStore = new session.MemoryStore();
 
@@ -41,4 +43,39 @@ const parseToken = raw => {
   }
 };  
 
-module.exports = {keycloak, memoryStore, exported_session, parseToken};
+async function syncNewUsers() {
+
+  const kcAdminClient = new KeycloakAdminClient({
+    baseUrl: process.env.KEYCLOAK_URL,
+    realmName: process.env.KEYCLOAK_CLIENT
+  });
+
+  try {
+    await kcAdminClient.auth({
+      username: process.env.KEYCLOAK_CLI_ADMIN,
+      password: process.env.KEYCLOAK_CLI_ADMIN_PASS,
+      grantType: 'password',
+      clientId: 'admin-cli'
+    });
+
+    // Fetch all users
+    const users = await kcAdminClient.users.find();
+
+    //Add only users which are not in database
+    for (let user of users) {
+      const userExists = await Users.findOne({where: {email: user.email}});
+      if (!userExists) {
+        await Users.create({
+          username: user.username,
+          email: user.email,
+        });
+      }
+    }
+
+  } catch (error) {
+    console.error('User sync failed:', error);
+  }
+}
+
+
+module.exports = {keycloak, memoryStore, exported_session, parseToken, syncNewUsers};
