@@ -21,6 +21,9 @@ const port = 3000
 
 app.use(express.json());
 
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
 //API Docs
 app.use(express.urlencoded({extended: true}));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
@@ -37,39 +40,27 @@ app.use( keycloak.middleware({
 }));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.render('landing');
 });
 
 app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
   
   const details = parseToken(req.session['keycloak-token']);
-  let response = 'Hello World! You are logged in as an admin with the following details:<br>';
 
-  if (details) {
-    for (const [key, value] of Object.entries(details)) {
-      response += `${key}: ${JSON.stringify(value)}<br>`;
-    }
-  } else {
-    response += 'No token details available.';
-  }
-  
-  res.send(response);
+  const name = details.preferred_username;
+  const role = details.realm_role.includes('admin') ? 'admin' : 'user';
+  console.log(details)
+  res.render('admin', {role: role, name: name});
 
 })
 
 app.get('/user', keycloak.protect('realm:user'), (req, res) => {
   const details = parseToken(req.session['keycloak-token']);
-  let response = 'Hello World! You are logged in as a user with the following details:<br>';
 
-  if (details) {
-    for (const [key, value] of Object.entries(details)) {
-      response += `${key}: ${JSON.stringify(value)}<br>`;
-    }
-  } else {
-    response += 'No token details available.';
-  }
-  
-  res.send(response);
+  const name = details.preferred_username;
+  const role = details.realm_role.includes('user') ? 'user' : '';
+  console.log(details)
+  res.render('user', {role: role, name: name});
 })
 
 app.listen(port, () => {

@@ -39,7 +39,6 @@ const parseToken = raw => {
   } catch (e) {
       console.error('Error while parsing token: ', e);
   }
-};
-
+};  
 
 module.exports = {keycloak, memoryStore, exported_session, parseToken};
