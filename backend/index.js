@@ -40,6 +40,9 @@ app.use( keycloak.middleware({
 }));
 
 app.get('/', (req, res) => {
+  //Maybe add here the function that will synchronize keycloak users with my db, because
+  //I will need the user's id to make the requests to the db
+  //and also / is frequently accessed
   res.render('landing');
 });
 
