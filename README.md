@@ -55,8 +55,35 @@ npx sequelize-cli db:seed:all # Dummy data
 ![photo](photos/photo-2.png)
 
 # Authentication server setup
+1. Make sure the .env file has all the proper fields
 
-Docker command to run Keycloak
+2. Docker command to run Keycloak
 ```
 docker run -d --name keycloak -p 8080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.0 start-dev
 ```
+3. Go to http://IP:8080
+4. Login with admin credentials
+5. Create new realm called `resource-manager`
+
+![photo](photos/keycloak-1.png)
+
+6.  Then modify the info needed for register/login: Go to Realm settings > User Profile > Delete lastName and firstName
+
+![photo](photos/keycloak-2.png)
+
+7. Create two realm roles: admin and user
+8. Creating `resource-manager` client
+* Client authentication and Authorization enabled
+* Add the IP address of your development server or if localhost(depends on the case)
+
+![photo](photos/keycloak-3.png)
+
+9. Create a client scope called `resource-manager`, then add a mapper to that scope which has the `Included Client Audience` as `resource-manager`
+10. Add the scope to the `resource-manager` Client
+11. Get the secret key from the adapter config of the client and add it to the .env file 
+
+![photo](photos/keycloak-4.png)
+
+12. Add realm and client role mappers to the `resource-manager` client scope and enable to be added to userinfo. In this way we can see their roles in the access token. 
+13. Add the `view-users` role to the admin role and the `user` role to the defaults role.
+14. Create a user and assign him admin and user roles, then test the `/admin` and `/user` endpoints.
