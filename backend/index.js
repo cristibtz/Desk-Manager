@@ -52,8 +52,7 @@ app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
   const details = parseToken(req.session['keycloak-token']);
 
   const name = details.preferred_username;
-  const role = details.realm_role.includes('admin') ? 'admin' : 'user';
-  console.log(details)
+  const role = details.realm_access["roles"].includes('admin') ? 'admin' : 'user';
   res.render('admin', {role: role, name: name});
 
 })
@@ -62,8 +61,7 @@ app.get('/user', keycloak.protect('realm:user'), (req, res) => {
   const details = parseToken(req.session['keycloak-token']);
 
   const name = details.preferred_username;
-  const role = details.realm_role.includes('user') ? 'user' : '';
-  console.log(details)
+  const role = details.realm_access["roles"].includes('user') ? 'user' : '';
   res.render('user', {role: role, name: name});
 })
 

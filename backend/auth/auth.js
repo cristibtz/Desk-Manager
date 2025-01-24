@@ -69,6 +69,7 @@ async function syncNewUsers() {
           username: user.username,
           email: user.email,
         });
+        console.log('User added:', user.email);
       }
     }
 
