@@ -29,7 +29,13 @@ DB_PORT=5432
 DB_USER=whatever
 DB_PASS=whatever
 DB_NAME=resource-manager
+
 APP_SECRET=secret
+APP_URL="http://IP"
+
+TEST_USER="tester"
+TEST_PASS=whatever
+
 KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
 KEYCLOAK_URL="http://localhost:8080/"

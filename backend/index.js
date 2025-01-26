@@ -28,9 +28,6 @@ app.set('views', __dirname + '/views');
 app.use(express.urlencoded({extended: true}));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-//Routes
-app.use(routes);
-
 //Session
 app.use(exported_session);
 
@@ -39,12 +36,15 @@ app.use( keycloak.middleware({
   admin: '/admin',
 }));
 
+//Routes
+app.use(routes);
+
 app.get('/', (req, res) => {
 
   //To sync the users when '/' is accessed
   syncNewUsers();
 
-  res.render('landing');
+  res.status(200).render('landing');
 });
 
 app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
@@ -53,16 +53,17 @@ app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
 
   const name = details.preferred_username;
   const role = details.realm_access["roles"].includes('admin') ? 'admin' : 'user';
-  res.render('admin', {role: role, name: name});
+  res.status(200).render('admin', {role: role, name: name});
 
 })
 
 app.get('/user', keycloak.protect('realm:user'), (req, res) => {
+  
   const details = parseToken(req.session['keycloak-token']);
 
   const name = details.preferred_username;
   const role = details.realm_access["roles"].includes('user') ? 'user' : '';
-  res.render('user', {role: role, name: name});
+  res.status(200).render('user', {role: role, name: name});
 })
 
 app.listen(port, () => {
