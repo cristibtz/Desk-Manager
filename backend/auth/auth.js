@@ -2,6 +2,8 @@ const session = require('express-session');
 const Keycloak = require('keycloak-connect');
 const dotenv = require('dotenv').config({path: '../.env'});
 const Users = require("../database/models").Users;
+const axios = require('axios');
+const qs = require('qs');
 const KeycloakAdminClient = require('@keycloak/keycloak-admin-client').default;
 
 const memoryStore = new session.MemoryStore();
@@ -78,5 +80,32 @@ async function syncNewUsers() {
   }
 }
 
+//Get user token
+async function getTestUserToken(username, password) {
+  try {
+    const tokenUrl = process.env.KEYCLOAK_URL  + '/realms/' + process.env.KEYCLOAK_CLIENT + '/protocol/openid-connect/token';
+    
+    const data = qs.stringify({
+      'grant_type': 'password',
+      'client_id': process.env.KEYCLOAK_CLIENT,
+      'client_secret': process.env.KEYCLOAK_SECRET,
+      'username': username,
+      'password': password
+    });
 
-module.exports = {keycloak, memoryStore, exported_session, parseToken, syncNewUsers};
+    const response = await axios.post(tokenUrl, data, {
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    
+    console.log('Token:', response.data.access_token);
+
+    return response.data.access_token;
+  } catch (error) {
+    console.error('Error getting token:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+module.exports = {keycloak, memoryStore, exported_session, parseToken, syncNewUsers, getTestUserToken};
