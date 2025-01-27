@@ -99,7 +99,7 @@ async function getTestUserToken(username, password) {
       }
     });
     
-    console.log('Token:', response.data.access_token);
+    //console.log('Token:', response.data.access_token);
 
     return response.data.access_token;
   } catch (error) {

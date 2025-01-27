@@ -6,6 +6,7 @@ const Reservations = require("../../database/models").Reservations;
 
 const { param, body, validationResult } = require('express-validator');
 
+//To import exported_session here, parse the keycloak-token and extract email specific to every user
 const email = "alex@app.com"
 
 exports.deleteReservation = [
