@@ -93,3 +93,5 @@ docker run -d --name keycloak -p 8080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin 
 12. Add realm and client role mappers to the `resource-manager` client scope and enable to be added to userinfo. In this way we can see their roles in the access token. 
 13. Add the `view-users` role to the admin role and the `user` role to the defaults role.
 14. Create a user and assign him admin and user roles, then test the `/admin` and `/user` endpoints.
+
+# Testing approach
