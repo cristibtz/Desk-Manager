@@ -34,7 +34,7 @@ APP_SECRET=secret
 APP_URL="http://IP"
 
 TEST_USER="tester"
-TEST_PASS=whatever
+TEST_USER_PASS=whatever
 
 KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
@@ -95,3 +95,23 @@ docker run -d --name keycloak -p 8080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin 
 14. Create a user and assign him admin and user roles, then test the `/admin` and `/user` endpoints.
 
 # Testing approach
+
+Every endpoint will be tested based on the methods that it supports. I recommend that firstly the admin endpoints are tested in this order: GET, POST, DELETE, then the user ones in the same order.
+
+A "tester" user has to be created in Keycloak and his info must be added to the .env file. He will be assigned the admin and user role so that he can access all the endpoints.
+
+The files containing get "*TestGet.js" are used to test if the endpoints are accessible and if theyr return the proper code.
+
+The files containing post "*TestPost.js" are used to either created or update resources, expecting either code 201 or code 200, respectively. At the moment, the resources aren't created on behalf of user "tester", but as a preexisting user with his email addresses hardcoded.(this is temporary)
+
+The files containing delete "*TestDelete.js" are used to test if the resources can be deleted correctly and if the return code is the proper one.
+
+The commands used to test are simple:
+```
+cd backend/testing
+
+sudo apt install mocha chai -Y
+
+npx mocha 'testfile'
+```
+Run this command in the order specified above for every file.
