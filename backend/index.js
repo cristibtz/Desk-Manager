@@ -39,6 +39,8 @@ app.use( keycloak.middleware({
 //Routes
 app.use(routes);
 
+//To do: delete /admin and /user routes and modify / route so that it handles admin and user role(to be done while integrating the frontend)
+
 app.get('/', (req, res) => {
 
   //To sync the users when '/' is accessed

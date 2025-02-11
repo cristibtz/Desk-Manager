@@ -156,7 +156,6 @@ exports.getUserReservations = [
 ]
 
 //Rooms
-
 exports.getRooms = async (req, res) => {
 
     try {
@@ -253,7 +252,6 @@ exports.getRoomDesks = [
 ]
 
 //Desks
-
 exports.getDesks = async (req, res) => {
     try {
         const desks = await Desks.findAll({
