@@ -9,6 +9,8 @@ git branch dev
 git checkout dev
 git push -u origin dev
 ```
+# <i>Backend</i>
+
 # Project setup
 ```
 cd backend
@@ -115,3 +117,14 @@ sudo apt install mocha chai -Y
 npx mocha 'testfile'
 ```
 Run this command in the order specified above for every file.
+
+# <i>Frontend</i>
+
+# Frontend Framework setup
+
+```
+npm create vite@latest frontend
+cd frontend
+npm install
+npm run dev
+```

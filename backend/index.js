@@ -2,6 +2,7 @@ const express = require('express')
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const db = require('./database/database.js');
+const cors = require('cors');
 require('dotenv').config();
 const { keycloak, exported_session, syncNewUsers, getUserInfoFromToken } = require('./auth/auth.js');
 
@@ -39,6 +40,12 @@ app.use( keycloak.middleware({
 //Routes
 app.use(routes);
 
+//CORS
+app.use(cors({
+  origin: 'http://192.168.100.179:5173',
+  credentials: true
+}));
+
 app.get('/', keycloak.protect(), async (req, res) => {
 
   //To sync the users when '/' is accessed
@@ -51,6 +58,14 @@ app.get('/', keycloak.protect(), async (req, res) => {
 
   //For the home page, the user info will be sent to frontend and the navbar and buttons will be role-based
   res.status(200).render('home', {role: role, name: name});
+});
+
+//Testing how to display user info on frontend before deleting previous method
+app.get('/frontend', keycloak.protect(), async (req, res) => {
+
+  userInfo = await getUserInfoFromToken(req);
+
+  return userInfo;
 });
 
 /*
