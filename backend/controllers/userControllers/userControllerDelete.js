@@ -3,16 +3,18 @@ const Users = require("../../database/models").Users;
 const Rooms = require("../../database/models").Rooms;
 const Desks = require("../../database/models").Desks;
 const Reservations = require("../../database/models").Reservations;
+const {getUserInfoFromToken} = require("../../auth/auth");
 
 const { param, body, validationResult } = require('express-validator');
-
-//To do: import exported_session here, parse the keycloak-token and extract email specific to every user
-const email = "alex@app.com"
 
 exports.deleteReservation = [
     param('reservation_id').isInt().withMessage('Reservation ID must be an integer'),
 
     async (req, res) => {
+
+        const userInfo = await getUserInfoFromToken(req);
+        const user_email = userInfo.email;
+
         const reservation_id = req.params.reservation_id;
 
         //Check if request parameters are missing
@@ -32,7 +34,7 @@ exports.deleteReservation = [
             const user = await Users.findOne({
                 attributes: ['id', 'username', 'email'],
                 where: {
-                    email: email,
+                    email: user_email,
                 }
             });
 

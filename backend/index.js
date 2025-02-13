@@ -3,7 +3,7 @@ const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const db = require('./database/database.js');
 require('dotenv').config();
-const { keycloak, exported_session, parseToken, syncNewUsers } = require('./auth/auth.js');
+const { keycloak, exported_session, syncNewUsers, getUserInfoFromToken } = require('./auth/auth.js');
 
 const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
 const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
@@ -39,16 +39,21 @@ app.use( keycloak.middleware({
 //Routes
 app.use(routes);
 
-//To do: delete /admin and /user routes and modify / route so that it handles admin and user role(to be done while integrating the frontend)
-
-app.get('/', (req, res) => {
+app.get('/', keycloak.protect(), async (req, res) => {
 
   //To sync the users when '/' is accessed
   syncNewUsers();
 
-  res.status(200).render('landing');
+  userInfo = await getUserInfoFromToken(req);
+
+  const name = userInfo.name;
+  const role = userInfo.roles.includes('admin') ? 'admin' : 'user';
+
+  //For the home page, the user info will be sent to frontend and the navbar and buttons will be role-based
+  res.status(200).render('home', {role: role, name: name});
 });
 
+/*
 app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
   
   const details = parseToken(req.session['keycloak-token']);
@@ -67,7 +72,7 @@ app.get('/user', keycloak.protect('realm:user'), (req, res) => {
   const role = details.realm_access["roles"].includes('user') ? 'user' : '';
   res.status(200).render('user', {role: role, name: name});
 })
-
+*/
 app.listen(port, () => {
   console.log(`Running on port ${port}`)
 })

@@ -3,12 +3,10 @@ const Users = require("../../database/models").Users;
 const Rooms = require("../../database/models").Rooms;
 const Desks = require("../../database/models").Desks;
 const Reservations = require("../../database/models").Reservations;
+const {getUserInfoFromToken} = require("../../auth/auth");
 const { Op } = require('sequelize');
 
 const { param, body, validationResult } = require('express-validator');
-
-//To do: import exported_session here, parse the keycloak-token and extract email specific to every user
-const email = "alex@app.com"
 
 exports.createReservation = [
     body('room_id').isInt().withMessage('Room ID must be an integer'),
@@ -21,6 +19,10 @@ exports.createReservation = [
     .withMessage('Duration must be one of the following values: 30, 60, 90, 120'),
 
     async (req, res) => {
+
+        const userInfo = await getUserInfoFromToken(req);
+        const user_email = userInfo.email;
+
         const { room_id, desk_id, start_date, note, duration } = req.body;
 
         //Check if any request parameters are missing
@@ -38,7 +40,7 @@ exports.createReservation = [
         const user = await Users.findOne({
             attributes: ['id'],
             where: {
-                email: email
+                email: user_email
             }
         });
 
@@ -181,6 +183,10 @@ exports.updateReservation = [
     .withMessage('Duration must be one of the following values: 30, 60, 90, 120'),
 
     async (req, res) => {
+
+        const userInfo = await getUserInfoFromToken(req);
+        const user_email = userInfo.email;
+
         const reservation_id = req.params.reservation_id;
         const { new_start_date, duration } = req.body;
 
@@ -200,7 +206,7 @@ exports.updateReservation = [
         const user = await Users.findOne({
             attributes: ['id'],
             where: {
-                email: email
+                email: user_email
             }
         });
         const user_id = user.id;

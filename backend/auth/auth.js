@@ -108,4 +108,21 @@ async function getTestUserToken(username, password) {
   }
 }
 
-module.exports = {keycloak, memoryStore, exported_session, parseToken, syncNewUsers, getTestUserToken};
+async function getUserInfoFromToken(req) {
+  const tokenInfo = parseToken(req.session['keycloak-token']);
+  console.log('Token info:', tokenInfo);
+  if (!tokenInfo) {
+    throw new Error('Invalid token');
+  }
+
+  const userInfo = {
+    name: tokenInfo.preferred_username,
+    email: tokenInfo.email,
+    roles: tokenInfo.realm_access["roles"],
+    keycloak_user_id: tokenInfo.sub
+  };
+
+  return userInfo;
+}
+
+module.exports = {keycloak, memoryStore, exported_session, syncNewUsers, getTestUserToken, getUserInfoFromToken};
