@@ -1,15 +1,15 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Dashboard() {
 
   return (
     <div>
-        <h2>Welcome </h2>
-        <h3>Role:</h3>
+      <p>Name: </p>
+      <p>Email: </p>
+      <p>Role: </p>
     </div>
   );
 }
-
 
 export default Dashboard;
