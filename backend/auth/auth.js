@@ -31,6 +31,7 @@ exported_session = session({
     store: memoryStore
 })
 
+/*
 const parseToken = raw => {
   if (!raw || typeof raw !== 'string') return null;
 
@@ -44,6 +45,19 @@ const parseToken = raw => {
       console.error('Error while parsing token: ', e);
   }
 };  
+*/
+
+const parseToken = raw => {
+  if (!raw || typeof raw !== 'string') return null;
+
+  try {
+    const content = raw.split('.')[1];
+    return JSON.parse(Buffer.from(content, 'base64').toString('utf-8'));
+  } catch (e) {
+    console.error('Error while parsing token: ', e);
+    return null;
+  }
+};
 
 async function syncNewUsers() {
 
@@ -107,7 +121,7 @@ async function getTestUserToken(username, password) {
     throw error;
   }
 }
-
+/*
 async function getUserInfoFromToken(req) {
   const tokenInfo = parseToken(req.session['keycloak-token']);
   console.log('Token info:', tokenInfo);
@@ -124,5 +138,29 @@ async function getUserInfoFromToken(req) {
 
   return userInfo;
 }
+*/
 
-module.exports = {keycloak, memoryStore, exported_session, syncNewUsers, getTestUserToken, getUserInfoFromToken};
+async function getUserInfoFromTokenHeader(req) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    throw new Error('Invalid authorization header');
+  }
+
+  const token = authHeader.split(' ')[1];
+  const tokenInfo = parseToken(token);
+  console.log('Token info:', tokenInfo);
+  if (!tokenInfo) {
+    throw new Error('Invalid token');
+  }
+
+  const userInfo = {
+    name: tokenInfo.preferred_username,
+    email: tokenInfo.email,
+    roles: tokenInfo.realm_access["roles"],
+    keycloak_user_id: tokenInfo.sub
+  };
+
+  return userInfo;
+}
+
+module.exports = {keycloak, memoryStore, exported_session, syncNewUsers, getTestUserToken, getUserInfoFromTokenHeader};

@@ -4,7 +4,7 @@ const YAML = require('yamljs');
 const db = require('./database/database.js');
 const cors = require('cors');
 require('dotenv').config();
-const { keycloak, exported_session, syncNewUsers, getUserInfoFromToken } = require('./auth/auth.js');
+const { keycloak, exported_session, syncNewUsers, getUserInfoFromTokenHeader } = require('./auth/auth.js');
 
 const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
 const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
@@ -42,7 +42,7 @@ app.use(routes);
 
 //CORS
 app.use(cors({
-  origin: 'http://192.168.100.179:5173',
+  origin: 'http://localhost:5173',
   credentials: true
 }));
 
@@ -51,7 +51,7 @@ app.get('/', keycloak.protect(), async (req, res) => {
   //To sync the users when '/' is accessed
   syncNewUsers();
 
-  userInfo = await getUserInfoFromToken(req);
+  userInfo = await getUserInfoFromTokenHeader(req);
 
   const name = userInfo.name;
   const role = userInfo.roles.includes('admin') ? 'admin' : 'user';
@@ -61,33 +61,14 @@ app.get('/', keycloak.protect(), async (req, res) => {
 });
 
 //Testing how to display user info on frontend before deleting previous method
+//This /frontend will eventually become / and the backend wont need to send parsed html templates anymore, onyl data objects
 app.get('/frontend', keycloak.protect(), async (req, res) => {
 
-  userInfo = await getUserInfoFromToken(req);
+  userInfo = await getUserInfoFromTokenHeader(req);
 
-  return userInfo;
+  res.status(200).send(JSON.stringify(userInfo, null, 2)); 
 });
 
-/*
-app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
-  
-  const details = parseToken(req.session['keycloak-token']);
-
-  const name = details.preferred_username;
-  const role = details.realm_access["roles"].includes('admin') ? 'admin' : 'user';
-  res.status(200).render('admin', {role: role, name: name});
-
-})
-
-app.get('/user', keycloak.protect('realm:user'), (req, res) => {
-  
-  const details = parseToken(req.session['keycloak-token']);
-
-  const name = details.preferred_username;
-  const role = details.realm_access["roles"].includes('user') ? 'user' : '';
-  res.status(200).render('user', {role: role, name: name});
-})
-*/
 app.listen(port, () => {
   console.log(`Running on port ${port}`)
 })

@@ -1,10 +1,9 @@
 import Keycloak from "keycloak-js";
 
-
 let keycloak = new Keycloak({
-    url: 'http://192.168.100.179:8080/',
-    realm: 'resource-manager',
-    clientId: 'resource-manager',
+    url: import.meta.env.VITE_KEYCLOAK_URL,
+    realm: import.meta.env.VITE_KEYCLOAK_REALM,
+    clientId: import.meta.env.VITE_KEYCLOAK_CLIENT,
 });
 
 const initKeycloak = async () => {
@@ -18,7 +17,7 @@ const initKeycloak = async () => {
 
         if (authenticated) {
             console.log('User is authenticated');
-            return authenticated;
+            return { authenticated, token: keycloak.token };
         } else {
 
             console.log('User is not authenticated');
