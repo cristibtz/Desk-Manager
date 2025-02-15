@@ -34,17 +34,16 @@ app.use(exported_session);
 
 app.use( keycloak.middleware({ 
   logout: '/logout', 
-  admin: '/admin',
 }));
-
-//Routes
-app.use(routes);
 
 //CORS
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
+
+//Routes
+app.use(routes);
 
 app.get('/', keycloak.protect(), async (req, res) => {
 
@@ -62,7 +61,7 @@ app.get('/', keycloak.protect(), async (req, res) => {
 
 //Testing how to display user info on frontend before deleting previous method
 //This /frontend will eventually become / and the backend wont need to send parsed html templates anymore, onyl data objects
-app.get('/frontend', keycloak.protect(), async (req, res) => {
+app.get('/userinfo', keycloak.protect(), async (req, res) => {
 
   userInfo = await getUserInfoFromTokenHeader(req);
 

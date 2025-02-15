@@ -3,13 +3,13 @@ const Users = require("../../database/models").Users;
 const Rooms = require("../../database/models").Rooms;
 const Desks = require("../../database/models").Desks;
 const Reservations = require("../../database/models").Reservations;
-const {getUserInfoFromToken} = require("../../auth/auth");
+const {getUserInfoFromTokenHeader} = require("../../auth/auth");
 
 const {param, validationResult} = require('express-validator');
 
 exports.getUserReservations = async (req, res) => {
 
-    const userInfo = await getUserInfoFromToken(req);
+    const userInfo = await getUserInfoFromTokenHeader(req);
     const user_email = userInfo.email;
 
     try {
