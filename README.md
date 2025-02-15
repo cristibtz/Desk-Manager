@@ -128,3 +128,11 @@ cd frontend
 npm install
 npm run dev
 ```
+
+Create .env file in /frontend and add environment variables as follows:
+```
+VITE_KEYCLOAK_REALM="resource-manager"
+VITE_KEYCLOAK_CLIENT="resource-manager"
+VITE_KEYCLOAK_URL="http://localhost:8080"
+VITE_BACKEND_API_URL="http://localhost:3000"
+```
