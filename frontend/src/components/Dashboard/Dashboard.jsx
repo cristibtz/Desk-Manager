@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { initKeycloak, logout} from "../../Keycloak"
-import axios from "axios";
-import './Dashboard.css';
+import React, {useContext, useEffect, useState } from "react";
+import { KeycloakContext } from "../../KeycloakContext";
+import { createApiClient } from "../../utils/apiClient";
 import { formatDate } from "../../utils/formatDate";
+import './Dashboard.css';
 
 function Dashboard() {
 
-  const [authenticated, setAuthenticated] = useState(false);
-  const [userInfo, setData] = useState({ name: "", email: "", role: "" });
-  const [reservationData, setReservationData] = useState([]);
+    const { authenticated, token, logout } = useContext(KeycloakContext);
+    const [userInfo, setData] = useState({ name: "", email: "", role: "" });
+    const [reservationData, setReservationData] = useState([]);
 
-  useEffect(() => {
-
-    const initializeKeycloak = async () => {
-
-      const {authenticated, token}  = await initKeycloak();
-      console.log(token);
-      setAuthenticated(authenticated);
-
-      if (authenticated) {
-        fetchData(token);
-      }
-
-    };
+    useEffect(() => {
+        if (authenticated && token) {
+          fetchData(token);
+        }
+    }, [authenticated, token]);
 
     const fetchData = async (token) => {
 
-      const apiClient = axios.create({
-        baseURL: import.meta.env.VITE_BACKEND_API_URL,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-      });
+      const apiClient = createApiClient(token);
     
       const getUserInfo = await apiClient.get('/userinfo');
       console.log(getUserInfo.data);
+
       setData({
         name: getUserInfo.data.name,
         email: getUserInfo.data.email,
@@ -47,9 +34,6 @@ function Dashboard() {
       setReservationData(getReservations.data);
       
     };
-    initializeKeycloak();
-
-  }, []);
 
   return (
     <div>

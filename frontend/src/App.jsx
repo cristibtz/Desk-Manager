@@ -1,21 +1,19 @@
+import { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard/Dashboard';
 import Landing from './components/Landing/Landing';
-import ReactDOM from "react-dom/client";
+import { KeycloakProvider } from './KeycloakContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
 
-
   return (
-    <Router>
-      <div>
-        
+    <KeycloakProvider>
+      <Router>
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        
+          <Route path="/dashboard" element={<Dashboard />} ></Route>
+          <Route path="/" element={<Landing />}></Route>
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </KeycloakProvider>
   );
 }
 
