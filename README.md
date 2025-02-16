@@ -136,3 +136,13 @@ VITE_KEYCLOAK_CLIENT="resource-manager"
 VITE_KEYCLOAK_URL="http://localhost:8080"
 VITE_BACKEND_API_URL="http://localhost:3000"
 ```
+# Redoing keycloak setup for frontend
+1. Change URLs to the frontend ones in Keycloak for redirects
+
+![photo](photos/frontend-kc-1.png)
+
+Web origins will remain like this for now.
+
+2. In Advanced settings, change PKCE like in the photo
+
+![photo](photos/frontend-kc-2.png)

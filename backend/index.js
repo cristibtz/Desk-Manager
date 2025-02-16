@@ -38,7 +38,7 @@ app.use( keycloak.middleware({
 
 //CORS
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'http://192.168.100.179:5173'],
   credentials: true
 }));
 
@@ -59,8 +59,7 @@ app.get('/', keycloak.protect(), async (req, res) => {
   res.status(200).render('home', {role: role, name: name});
 });
 
-//Testing how to display user info on frontend before deleting previous method
-//This /frontend will eventually become / and the backend wont need to send parsed html templates anymore, onyl data objects
+
 app.get('/userinfo', keycloak.protect(), async (req, res) => {
 
   userInfo = await getUserInfoFromTokenHeader(req);
