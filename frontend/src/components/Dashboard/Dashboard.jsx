@@ -37,10 +37,7 @@ function Dashboard() {
 
   return (
     <div>
-      <p>Name: {userInfo.name}</p>
-      <p>Email: {userInfo.email}</p>
-      <p>Role: {userInfo.role}</p>
-      {authenticated && <button onClick={logout}>Logout</button>}
+      <h1>Welcome, {userInfo.name} ({userInfo.role}) !</h1>
 
       <h2>Reservations</h2>
       <p>Here are your reservations:</p>
