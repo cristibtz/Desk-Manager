@@ -30,7 +30,6 @@ function Dashboard() {
       });
 
       const getReservations = await apiClient.get('/user/reservations');
-      console.log(getReservations.data);
       setReservationData(getReservations.data);
       
     };

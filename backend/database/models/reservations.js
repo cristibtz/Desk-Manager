@@ -11,8 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Reservations.belongsTo(models.Users);
-      models.Users.hasMany(Reservations);
 
       Reservations.belongsTo(models.Rooms);
       models.Rooms.hasMany(Reservations);
@@ -22,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Reservations.init({
-    user_id: DataTypes.INTEGER,
+    user_id: DataTypes.STRING,
     room_id: DataTypes.INTEGER,
     desk_id: DataTypes.INTEGER,
     start_date: DataTypes.DATE,

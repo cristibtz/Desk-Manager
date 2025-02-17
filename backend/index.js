@@ -47,15 +47,11 @@ app.use(routes);
 
 app.get('/', keycloak.protect(), async (req, res) => {
 
-  //To sync the users when '/' is accessed
-  syncNewUsers();
-
   userInfo = await getUserInfoFromTokenHeader(req);
 
   const name = userInfo.name;
   const role = userInfo.roles.includes('admin') ? 'admin' : 'user';
 
-  //For the home page, the user info will be sent to frontend and the navbar and buttons will be role-based
   res.status(200).render('home', {role: role, name: name});
 });
 

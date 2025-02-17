@@ -16,6 +16,7 @@ export const KeycloakProvider = ({ children }) => {
 
         const { authenticated, token } = await initKeycloak();
         setAuthenticated(authenticated);
+        console.log(token)
         setToken(token);
   
         if (authenticated && token) {

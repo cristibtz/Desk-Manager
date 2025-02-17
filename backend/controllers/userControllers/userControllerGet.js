@@ -10,22 +10,14 @@ const {param, validationResult} = require('express-validator');
 exports.getUserReservations = async (req, res) => {
 
     const userInfo = await getUserInfoFromTokenHeader(req);
-    const user_email = userInfo.email;
-
+    const user_id = userInfo.keycloak_user_id;
+    
     try {
-
-        //Get user id by email
-        const user_id = await Users.findOne({
-            attributes: ['id'],
-            where: {
-                email: user_email
-            }
-        });
 
         const reservations = await Reservations.findAll({
             attributes: [ 'id', 'user_id', 'room_id', 'desk_id', 'start_date', 'end_date', 'note'],
             where: {
-                user_id: user_id.id
+                user_id: user_id
             }
         });
         
@@ -49,7 +41,7 @@ exports.getUserReservation = [
 
     async (req, res) => {
         const userInfo = await getUserInfoFromTokenHeader(req);
-        const user_email = userInfo.email;
+        const user_id = userInfo.keycloak_user_id;
 
         const reservation_id = req.params.reservation_id;
 
@@ -66,19 +58,12 @@ exports.getUserReservation = [
         }
 
         try {
-            //Check if reservation corresponds to user
-            const user_id = await Users.findOne({
-                attributes: ['id'],
-                where: {
-                    email: user_email
-                }
-            });
 
             const reservation = await Reservations.findOne({
                 attributes: [ 'id', 'user_id', 'room_id', 'desk_id', 'start_date', 'end_date', 'note'],
                 where: {
                     id: reservation_id,
-                    user_id: user_id.id
+                    user_id: user_id
                 }
             });
 

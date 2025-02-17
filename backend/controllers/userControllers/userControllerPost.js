@@ -1,9 +1,8 @@
 const db = require("../../database/database")
-const Users = require("../../database/models").Users;
 const Rooms = require("../../database/models").Rooms;
 const Desks = require("../../database/models").Desks;
 const Reservations = require("../../database/models").Reservations;
-const {getUserInfoFromToken} = require("../../auth/auth");
+const {getUserInfoFromTokenHeader} = require("../../auth/auth");
 const { Op } = require('sequelize');
 
 const { param, body, validationResult } = require('express-validator');
@@ -20,8 +19,8 @@ exports.createReservation = [
 
     async (req, res) => {
 
-        const userInfo = await getUserInfoFromToken(req);
-        const user_email = userInfo.email;
+        const userInfo = await getUserInfoFromTokenHeader(req);
+        const user_id = userInfo.keycloak_user_id;
 
         const { room_id, desk_id, start_date, note, duration } = req.body;
 
@@ -36,15 +35,6 @@ exports.createReservation = [
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({ message: "Bad request" });
         }
-
-        const user = await Users.findOne({
-            attributes: ['id'],
-            where: {
-                email: user_email
-            }
-        });
-
-        const user_id = user.id;
 
         const room = await Rooms.findByPk(room_id, {
             attributes: [ 'id', 'room_number', 'room_alias'],
@@ -61,6 +51,12 @@ exports.createReservation = [
         if (!desk) {
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({ message: "Desk not found." });
+        }
+
+        //Check if desk belongs to the room
+        if (parseInt(desk.room_id) !== parseInt(room_id)) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ message: "Desk does not belong to the room." });
         }
 
         const startDate = new Date(start_date);
@@ -91,7 +87,7 @@ exports.createReservation = [
                 }
             });
 
-            if (userReservations.length >= 3) {
+            if (userReservations.length >= 100) {
                 res.setHeader('Content-Type', 'application/json');
                 return res.status(400).json({ message: "A user can have a maximum of 3 reservations per day." });
             }
@@ -184,8 +180,8 @@ exports.updateReservation = [
 
     async (req, res) => {
 
-        const userInfo = await getUserInfoFromToken(req);
-        const user_email = userInfo.email;
+        const userInfo = await getUserInfoFromTokenHeader(req);
+        const user_id = userInfo.keycloak_user_id;
 
         const reservation_id = req.params.reservation_id;
         const { new_start_date, duration } = req.body;
@@ -201,16 +197,7 @@ exports.updateReservation = [
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({ message: "Bad request" });
         }
-
-        //Check if reservation exists and belongs to user
-        const user = await Users.findOne({
-            attributes: ['id'],
-            where: {
-                email: user_email
-            }
-        });
-        const user_id = user.id;
-
+        
         const reservation = await Reservations.findOne({
             attributes: ['id', 'user_id', 'room_id', 'desk_id', 'start_date', 'end_date', 'note'],
             where: {

@@ -3,7 +3,7 @@ const Users = require("../../database/models").Users;
 const Rooms = require("../../database/models").Rooms;
 const Desks = require("../../database/models").Desks;
 const Reservations = require("../../database/models").Reservations;
-const {getUserInfoFromToken} = require("../../auth/auth");
+const {getUserInfoFromTokenHeader} = require("../../auth/auth");
 
 const { param, body, validationResult } = require('express-validator');
 
@@ -12,8 +12,8 @@ exports.deleteReservation = [
 
     async (req, res) => {
 
-        const userInfo = await getUserInfoFromToken(req);
-        const user_email = userInfo.email;
+        const userInfo = await getUserInfoFromTokenHeader(req);
+        const user_id = userInfo.keycloak_user_id;
 
         const reservation_id = req.params.reservation_id;
 
@@ -30,16 +30,7 @@ exports.deleteReservation = [
         }
 
         try {
-            //Check if reservation corresponds to user
-            const user = await Users.findOne({
-                attributes: ['id', 'username', 'email'],
-                where: {
-                    email: user_email,
-                }
-            });
-
-            user_id = user.id;
-
+            
             const reservation = await Reservations.findOne({
                 attributes: ['id', 'user_id', 'room_id', 'desk_id', 'start_date', 'end_date', 'note'],
                 where: {
