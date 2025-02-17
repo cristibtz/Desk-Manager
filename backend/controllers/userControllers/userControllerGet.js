@@ -48,7 +48,7 @@ exports.getUserReservation = [
     param('reservation_id').isInt().withMessage('Reservation ID must be an integer'),
 
     async (req, res) => {
-        const userInfo = await getUserInfoFromToken(req);
+        const userInfo = await getUserInfoFromTokenHeader(req);
         const user_email = userInfo.email;
 
         const reservation_id = req.params.reservation_id;

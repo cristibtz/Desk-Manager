@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState } from "react";
 import { KeycloakContext } from "../../KeycloakContext";
 import { createApiClient } from "../../utils/apiClient";
 import { formatDate } from "../../utils/formatDate";
-import './Dashboard.css';
+import "../../css/Table.css"
 
 function Dashboard() {
 
@@ -40,37 +40,37 @@ function Dashboard() {
       <h1>Welcome, {userInfo.name} ({userInfo.role}) !</h1>
 
       <h2>Reservations</h2>
-      <p>Here are your reservations:</p>
       
-      {reservationData.length > 0 ? (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Reservation ID</th>
-              <th>Room ID</th>
-              <th>Desk ID</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reservationData.map((reservation) => (
-              <tr key={reservation.id}>
-                <td><a href={`/user/reservations/${reservation.id}`}>{reservation.id}</a></td>
-                <td>{reservation.room_id}</td>
-                <td>{reservation.desk_id}</td>
-                <td>{formatDate(reservation.start_date)}</td>
-                <td>{formatDate(reservation.end_date)}</td>
-                <td>{reservation.note}</td>
+      <div className="table-container">
+        {reservationData.length > 0 ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Reservation ID</th>
+                <th>Room ID</th>
+                <th>Desk ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Note</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No reservations found.</p>
-      )}
-    
+            </thead>
+            <tbody>
+              {reservationData.map((reservation) => (
+                <tr key={reservation.id}>
+                  <td><a href={`/user/reservations/${reservation.id}`}>{reservation.id}</a></td>
+                  <td>{reservation.room_id}</td>
+                  <td>{reservation.desk_id}</td>
+                  <td>{formatDate(reservation.start_date)}</td>
+                  <td>{formatDate(reservation.end_date)}</td>
+                  <td>{reservation.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No reservations found.</p>
+        )}
+      </div>
     </div>
   );
 }
