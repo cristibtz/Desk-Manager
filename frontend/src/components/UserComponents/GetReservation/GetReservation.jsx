@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { KeycloakContext } from "../../KeycloakContext";
-import { createApiClient } from "../../utils/apiClient";
-import { formatDate } from "../../utils/formatDate";
-import "../../css/Table.css"; 
+import { KeycloakContext } from "../../../KeycloakContext";
+import { createApiClient } from "../../../utils/apiClient";
+import { formatDate } from "../../../utils/formatDate";
+import "../../../css/Table.css"; 
 
 function ReservationDetails() {
     const { id } = useParams();

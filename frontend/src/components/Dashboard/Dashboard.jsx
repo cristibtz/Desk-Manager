@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState } from "react";
 import { KeycloakContext } from "../../KeycloakContext";
+import CreateReservation from "../UserComponents/CreateReservation/CreateReservation";
 import { createApiClient } from "../../utils/apiClient";
 import { formatDate } from "../../utils/formatDate";
 import "../../css/Table.css"
@@ -70,6 +71,9 @@ function Dashboard() {
           <p>No reservations found.</p>
         )}
       </div>
+
+      <CreateReservation token={token} fetchData={fetchData} />
+
     </div>
   );
 }
