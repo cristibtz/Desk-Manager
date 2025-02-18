@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { initKeycloak, logout } from './Keycloak';
+import { keycloak, initKeycloak, logout } from './Keycloak';
 import { jwtDecode } from "jwt-decode";
 
 export const KeycloakContext = createContext();
@@ -28,6 +28,23 @@ export const KeycloakProvider = ({ children }) => {
       };
       
       initializeKeycloak();
+
+      const refreshToken = async () => {
+        if (keycloak.token) {
+          try {
+            await keycloak.updateToken();
+            setToken(keycloak.token);
+            console.log('Token refreshed ', keycloak.token );
+          } catch (error) {
+            console.error('Failed to refresh token:', error);
+          }
+        }
+      };
+  
+      const intervalId = setInterval(refreshToken, 600000); 
+
+      return () => clearInterval(intervalId); 
+
     }, []);
   
     return (

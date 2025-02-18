@@ -28,8 +28,8 @@ Credentials will be read from a `.env` file which must be created in the `backen
 ```
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=whatever
-DB_PASS=whatever
+DB_USER=USERNAME
+DB_PASS=PASSWORD
 DB_NAME=resource-manager
 
 APP_SECRET=secret
@@ -40,10 +40,10 @@ TEST_USER_PASS=whatever
 
 KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
-KEYCLOAK_URL="http://localhost:8080/"
+KEYCLOAK_URL="http://localhost:8080/" #Or the IP of the development machine
 KEYCLOAK_SECRET="secret_from_the_oidc_json_file"
-KEYCLOAK_CLI_ADMIN="admin_user_of_the_resource-manager_app"
-KEYCLOAK_CLI_ADMIN_PASS=whatever
+KEYCLOAK_CLI_ADMIN="user_with_admin_role_of_the_resource-manager_app"
+KEYCLOAK_CLI_ADMIN_PASS=PASSWORD
 ```
 >The user which will access Keycloak via admin-cli must have view-users role assigned
 
@@ -133,8 +133,8 @@ Create .env file in /frontend and add environment variables as follows:
 ```
 VITE_KEYCLOAK_REALM="resource-manager"
 VITE_KEYCLOAK_CLIENT="resource-manager"
-VITE_KEYCLOAK_URL="http://localhost:8080"
-VITE_BACKEND_API_URL="http://localhost:3000"
+VITE_KEYCLOAK_URL="http://localhost:8080" #Or the IP of the development machine
+VITE_BACKEND_API_URL="http://localhost:3000" #Or the IP of the development machine
 ```
 # Redoing keycloak setup for frontend
 1. Change URLs to the frontend ones in Keycloak for redirects
