@@ -9,7 +9,7 @@ function CreateReservation() {
     room_id: "",
     desk_id: "",
     start_date: "",
-    duration: "30", // Default value to avoid empty string
+    duration: "", 
     note: ""
   });
   const [responseMessage, setResponseMessage] = useState("");
@@ -34,7 +34,6 @@ function CreateReservation() {
     };
 
     try {
-        console.log(formDataToSend);
         const response = await apiClient.post("/user/reservations", formDataToSend);
         setResponseMessage(response.data.message || "Reservation created successfully!");
     } catch (error) {

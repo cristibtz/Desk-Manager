@@ -5,7 +5,7 @@ import { createApiClient } from "../../../utils/apiClient";
 import { formatDate } from "../../../utils/formatDate";
 import "../../../css/Table.css"; 
 
-function ReservationDetails() {
+function GetReservation() {
     const { id } = useParams();
     const { authenticated, token } = useContext(KeycloakContext);
     const [reservation, setReservation] = useState(null);
@@ -19,7 +19,6 @@ function ReservationDetails() {
     const fetchReservation = async (token, id) => {
         const apiClient = createApiClient(token);
         const reservationData = await apiClient.get(`/user/reservations/${id}`);
-        console.log(reservationData.data);
         setReservation(reservationData.data);
     };
 
@@ -60,4 +59,4 @@ function ReservationDetails() {
     );
 }
 
-export default ReservationDetails;
+export default GetReservation;
