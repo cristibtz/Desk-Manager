@@ -1,4 +1,3 @@
-const db = require("../../database/database")
 const Users = require("../../database/models").Users;
 const Rooms = require("../../database/models").Rooms;
 const Desks = require("../../database/models").Desks;

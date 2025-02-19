@@ -4,16 +4,19 @@ const YAML = require('yamljs');
 const db = require('./database/database.js');
 const cors = require('cors');
 require('dotenv').config();
-const { keycloak, exported_session, syncNewUsers, getUserInfoFromTokenHeader } = require('./auth/auth.js');
+const { keycloak, exported_session, getUserInfoFromTokenHeader } = require('./auth/auth.js');
+
+const publicGetRoutes = require('./routes/publicRoutes/publicGetRoutes.js');
 
 const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
 const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
 const adminDeleteRoutes = require('./routes/adminRoutes/adminDeleteRoutes');
+
 const userGetRoutes = require('./routes/userRoutes/userGetRoutes');
 const userPostRoutes = require('./routes/userRoutes/userPostRoutes');
 const userDeleteRoutes = require('./routes/userRoutes/userDeleteRoutes');
 
-const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes];
+const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes, publicGetRoutes];
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 

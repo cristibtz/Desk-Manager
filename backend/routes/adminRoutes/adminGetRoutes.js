@@ -19,15 +19,4 @@ router.get('/users', checkAdminRole, adminControllerGet.getUsers);
 router.get('/users/:user_id', checkAdminRole, adminControllerGet.getUser);
 router.get('/users/:user_id/reservations', checkAdminRole, adminControllerGet.getUserReservations);
 
-
-//Rooms routes
-router.get('/rooms/', checkAdminRole, adminControllerGet.getRooms);
-router.get('/rooms/:room_number', checkAdminRole, adminControllerGet.getRoom);
-router.get('/rooms/:room_id/desks', checkAdminRole, adminControllerGet.getRoomDesks);
-
-
-//Desks routes
-router.get('/desks/', checkAdminRole, adminControllerGet.getDesks);
-router.get('/desks/:desk_id', checkAdminRole, adminControllerGet.getDesk);
-
 module.exports = router;
