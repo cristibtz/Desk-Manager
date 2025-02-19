@@ -1,8 +1,8 @@
 const express = require('express')
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
-const db = require('./database/database.js');
 const cors = require('cors');
+const logger = require('pino')();
 require('dotenv').config();
 const { keycloak, exported_session, getUserInfoFromTokenHeader } = require('./auth/auth.js');
 
@@ -62,6 +62,8 @@ app.get('/', keycloak.protect(), async (req, res) => {
 app.get('/userinfo', keycloak.protect(), async (req, res) => {
 
   userInfo = await getUserInfoFromTokenHeader(req);
+
+  logger.info(userInfo);
 
   res.status(200).send(JSON.stringify(userInfo, null, 2)); 
 });

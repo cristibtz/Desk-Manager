@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config({path: '../.env'});
 const Users = require("../database/models").Users;
 const axios = require('axios');
 const qs = require('qs');
+const logger = require('pino')();
 const KeycloakAdminClient = require('@keycloak/keycloak-admin-client').default;
 
 const memoryStore = new session.MemoryStore();
@@ -133,7 +134,7 @@ async function getUserInfoFromTokenHeader(req) {
 
   const token = authHeader.split(' ')[1];
   const tokenInfo = parseToken(token);
-  //console.log('Token info:', tokenInfo);
+  logger.info(tokenInfo);
   if (!tokenInfo) {
     throw new Error('Invalid token');
   }
