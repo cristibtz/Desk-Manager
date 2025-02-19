@@ -27,6 +27,10 @@ function DeleteReservation({token, reservationsData}) {
       }
     };
 
+    if (!reservationsData || reservationsData.length === 0) {
+      return <div>No reservations available to delete.</div>;
+    }
+
     return (
       <div>
         <h2>Delete Reservation</h2>

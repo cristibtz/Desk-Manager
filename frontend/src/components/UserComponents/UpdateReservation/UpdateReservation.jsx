@@ -35,6 +35,10 @@ function UpdateReservation({token, reservationsData}) {
       }
     };
 
+    if (!reservationsData || reservationsData.length === 0) {
+      return <div>No reservations available to update.</div>;
+    }
+
     return (
       <div>
         <h2>Update Reservation</h2>
