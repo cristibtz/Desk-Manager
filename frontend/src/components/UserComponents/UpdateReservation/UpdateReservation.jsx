@@ -1,22 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
-import { KeycloakContext } from "../../../KeycloakContext";
+import React, { useState } from "react";
 import { createApiClient } from "../../../utils/apiClient";
-import { fetchReservations } from "../../../utils/fetchReservations";
 
-function UpdateReservation() {
-    const { token } = useContext(KeycloakContext);
+function UpdateReservation({token, reservationsData}) {
     const [formData, setFormData] = useState({
       new_start_date: "",
       duration: "",
     });
-    const [reservations, setReservations] = useState([]);
     const [responseMessage, setResponseMessage] = useState("");
-
-    useEffect(() => {
-      if (token) {
-        fetchReservations(token).then(setReservations);
-      }
-    }, [token]);
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -59,7 +49,7 @@ function UpdateReservation() {
                 required
               >
                 <option value="">Select a reservation</option>
-                {reservations.map((reservation) => (
+                {reservationsData.map((reservation) => (
                   <option key={reservation.id} value={reservation.id}>
                     {reservation.id}
                   </option>

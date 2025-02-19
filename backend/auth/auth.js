@@ -133,7 +133,7 @@ async function getUserInfoFromTokenHeader(req) {
 
   const token = authHeader.split(' ')[1];
   const tokenInfo = parseToken(token);
-  console.log('Token info:', tokenInfo);
+  //console.log('Token info:', tokenInfo);
   if (!tokenInfo) {
     throw new Error('Invalid token');
   }

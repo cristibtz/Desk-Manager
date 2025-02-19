@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import { KeycloakContext } from "../../../KeycloakContext";
+import React, { useEffect, useState } from "react";
 import { formatDate } from "../../../utils/formatDate";
 import { fetchReservations } from "../../../utils/fetchReservations";
+import { getDeskNumber, getRoomAlias } from "../../../utils/mapRoomDesk";
 import "../../../css/Table.css";
 
-function GetReservations()  {
-  const { token } = useContext(KeycloakContext);
+function GetReservations({ token, roomsData, desksData })  {
   const [reservationsData, setReservationsData] = useState(null);
-
+  
   useEffect(() => {
     if (token) {
       fetchReservations(token).then(setReservationsData);
@@ -15,6 +14,10 @@ function GetReservations()  {
   }, [token]);
 
   if(!reservationsData) {
+    return <div>Reservations not found</div>
+}
+
+  if(!reservationsData || !desksData || !roomsData) {
     return <div>Loading...</div>
   }
 
@@ -29,7 +32,7 @@ function GetReservations()  {
               <tr>
                 <th>Reservation ID</th>
                 <th>Room ID</th>
-                <th>Desk ID</th>
+                <th>Desk Number</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Note</th>
@@ -39,8 +42,8 @@ function GetReservations()  {
               {reservationsData.map((reservation) => (
                 <tr key={reservation.id}>
                   <td><a href={`/user/reservations/${reservation.id}`}>{reservation.id}</a></td>
-                  <td>{reservation.room_id}</td>
-                  <td>{reservation.desk_id}</td>
+                  <td>{getRoomAlias(reservation.room_id, roomsData)}</td>
+                  <td>{getDeskNumber(reservation.desk_id, desksData)}</td>
                   <td>{formatDate(reservation.start_date)}</td>
                   <td>{formatDate(reservation.end_date)}</td>
                   <td>{reservation.note}</td>

@@ -1,20 +1,32 @@
 import React, {useContext, useEffect, useState } from "react";
 import { KeycloakContext } from "../../KeycloakContext";
+
 import CreateReservation from "../UserComponents/CreateReservation/CreateReservation";
 import GetReservations from "../UserComponents/GetReservations/GetReservations";
 import UpdateReservation from "../UserComponents/UpdateReservation/UpdateReservation";
 import DeleteReservation from "../UserComponents/DeleteReservation/DeleteReservation";
+
 import { createApiClient } from "../../utils/apiClient";
+import { fetchRooms } from "../../utils/fetchRooms";
+import { fetchDesks } from "../../utils/fetchDesks";
+import { fetchReservations } from "../../utils/fetchReservations";
+
 import "../../css/Table.css"
 
 function Dashboard() {
 
     const { authenticated, token } = useContext(KeycloakContext);
     const [userInfo, setData] = useState({ name: "", email: "", role: "" });
+    const [roomsData, setRoomsData] = useState([]);
+    const [desksData, setDesksData] = useState([]);
+    const [reservationsData, setReservationsData] = useState([]);
 
     useEffect(() => {
         if (authenticated && token) {
           fetchData(token);
+          fetchRooms(token).then(setRoomsData);
+          fetchDesks(token).then(setDesksData);
+          fetchReservations(token).then(setReservationsData);
         }
     }, [authenticated, token]);
 
@@ -36,10 +48,10 @@ function Dashboard() {
     <div>
       <h1>Welcome, {userInfo.name} ({userInfo.role}) !</h1>
 
-      <GetReservations token={token} />
-      <CreateReservation token={token} />
-      <UpdateReservation token={token} />
-      <DeleteReservation token={token} />
+      <GetReservations token={token} roomsData={roomsData} desksData={desksData} />
+      <CreateReservation token={token} roomsData={roomsData} />
+      <UpdateReservation token={token} reservationsData={reservationsData} />
+      <DeleteReservation token={token} reservationsData={reservationsData} />
     </div>
   );
 }

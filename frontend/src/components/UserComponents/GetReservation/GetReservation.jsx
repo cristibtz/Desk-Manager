@@ -1,41 +1,48 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { KeycloakContext } from "../../../KeycloakContext";
-import { createApiClient } from "../../../utils/apiClient";
+
+import { fetchDesks } from "../../../utils/fetchDesks";
+import { fetchRooms } from "../../../utils/fetchRooms";
 import { formatDate } from "../../../utils/formatDate";
+import { getDeskNumber, getRoomAlias } from "../../../utils/mapRoomDesk";
+import { fetchReservation } from "../../../utils/fetchReservation";
+
 import "../../../css/Table.css"; 
 
 function GetReservation() {
     const { id } = useParams();
     const { authenticated, token } = useContext(KeycloakContext);
-    const [reservation, setReservation] = useState(null);
+    const [reservationData, setReservationData] = useState(null);
+    const [desksData, setDesksData] = useState(null);
+    const [roomsData, setRoomsData] = useState(null);
 
     useEffect(() => {
         if (authenticated && token) {
-            fetchReservation(token, id);
+            fetchReservation(token, id).then(setReservationData);
+            fetchDesks(token).then(setDesksData);
+            fetchRooms(token).then(setRoomsData);
         }
     }, [authenticated, token, id]);
+    
+    if(!reservationData) {
+        return <div>Reservation not found</div>
+    }
 
-    const fetchReservation = async (token, id) => {
-        const apiClient = createApiClient(token);
-        const reservationData = await apiClient.get(`/user/reservations/${id}`);
-        setReservation(reservationData.data);
-    };
-
-    if(!reservation){
-        return <div>Loading...</div>;
+    if(!reservationData || !desksData || !roomsData) {
+        return <div>Loading...</div>
     }
 
     return (
         <div className="table-container">
             <h1>Reservation Details</h1>
-            {reservation ? (
+            {reservationData ? (
                 <table className="table">
                     <thead>
                         <tr>
                             <th>Reservation ID</th>
-                            <th>Room ID</th>
-                            <th>Desk ID</th>
+                            <th>Room Name</th>
+                            <th>Desk Number</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Note</th>
@@ -44,8 +51,8 @@ function GetReservation() {
                     <tbody>
                         <tr>
                             <td>{reservation.id}</td>
-                            <td>{reservation.room_id}</td>
-                            <td>{reservation.desk_id}</td>
+                            <td>{getRoomAlias(reservation.room_id, roomsData)}</td>
+                            <td>{getDeskNumber(reservation.desk_id, desksData)}</td>
                             <td>{formatDate(reservation.start_date)}</td>
                             <td>{formatDate(reservation.end_date)}</td>
                             <td>{reservation.note}</td>

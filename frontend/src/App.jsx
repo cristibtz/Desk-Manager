@@ -11,22 +11,42 @@ import "./css/App.css";
 
 function App() {
   return (
-    <KeycloakProvider>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Landing />} />
-          <Route path="/admin" element={
-            <ProtectedRoute requiredRole={import.meta.env.VITE_REQUIRED_ROLE}>
-              <AdminPanel />
-            </ProtectedRoute>
-          } />
-          <Route path="/occupied" element={<OccupiedDesks />}></Route>
-          <Route path="/user/reservations/:id" element={ <GetReservation />} />
-        </Routes>
-      </Router>
-    </KeycloakProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        
+        <Route path="/*" element={
+          <KeycloakProvider>
+            <NavBar />
+            <Routes>
+              <Route path="dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="admin" element={
+                <ProtectedRoute requiredRole={import.meta.env.VITE_REQUIRED_ROLE}>
+                  <AdminPanel />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="occupied" element={
+                <ProtectedRoute>
+                  <OccupiedDesks />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="user/reservations/:id" element={
+                <ProtectedRoute>
+                  <GetReservation />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </KeycloakProvider>
+        } />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { createApiClient } from "../../../utils/apiClient";
-import { KeycloakContext } from "../../../KeycloakContext";
-
-function CreateReservation() {
-  const { token } = useContext(KeycloakContext);
+import { fetchRoomDesks } from "../../../utils/fetchRoomDesks";
+function CreateReservation({ token, roomsData }) {
 
   const [formData, setFormData] = useState({
     room_id: "",
@@ -12,7 +10,17 @@ function CreateReservation() {
     duration: "", 
     note: ""
   });
+
   const [responseMessage, setResponseMessage] = useState("");
+  const [roomDesksData, setRoomDesksData] = useState([]);
+
+  useEffect(() => {
+    
+    if (formData.room_id) {
+      fetchRoomDesks(token, formData.room_id).then(setRoomDesksData);
+    }
+    
+  }, [formData.room_id, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,25 +54,37 @@ function CreateReservation() {
       <h2>Create Reservation</h2>
       <div>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Room ID:</label>
-            <input
-              type="number"
+        <div>
+            <label>Room Name:</label>
+            <select
               name="room_id"
               value={formData.room_id}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select a room</option>
+              {roomsData.map((room) => (
+                <option key={room.id} value={room.id}>
+                  {room.room_alias}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
-            <label>Desk ID:</label>
-            <input
-              type="number"
+            <label>Desk Number:</label>
+            <select
               name="desk_id"
               value={formData.desk_id}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select a desk</option>
+              {roomDesksData.map((desk) => (
+                <option key={desk.id} value={desk.id}>
+                  {desk.desk_number}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label>Start Date:</label>
