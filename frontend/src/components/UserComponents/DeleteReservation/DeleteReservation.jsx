@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createApiClient } from "../../../utils/apiClient";
 
-function DeleteReservation({token, reservationsData}) {
+function DeleteReservation({token, reservationsData = []}) {
     const [responseMessage, setResponseMessage] = useState("");
     const [formData, setFormData] = useState({
         reservation_id: "",
@@ -27,14 +27,11 @@ function DeleteReservation({token, reservationsData}) {
       }
     };
 
-    if (!reservationsData || reservationsData.length === 0) {
-      return <div>No reservations available to delete.</div>;
-    }
-
     return (
       <div>
         <h2>Delete Reservation</h2>
         <div>
+          {reservationsData.length > 0 ? (
           <form onSubmit={handleSubmit}>
             <div>
               <label>Reservation ID:</label>
@@ -54,6 +51,9 @@ function DeleteReservation({token, reservationsData}) {
             </div>
             <button type="submit">Delete Reservation</button>
           </form>
+          ) : (
+            <div>No reservations available to delete.</div>
+          )}
           {responseMessage && <p>{responseMessage}</p>}
         </div>
       </div>

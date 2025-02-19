@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createApiClient } from "../../../utils/apiClient";
 
-function UpdateReservation({token, reservationsData}) {
+function UpdateReservation({token, reservationsData = []}) {
     const [formData, setFormData] = useState({
       new_start_date: "",
       duration: "",
@@ -35,14 +35,11 @@ function UpdateReservation({token, reservationsData}) {
       }
     };
 
-    if (!reservationsData || reservationsData.length === 0) {
-      return <div>No reservations available to update.</div>;
-    }
-
     return (
       <div>
         <h2>Update Reservation</h2>
         <div>
+          { reservationsData.length > 0 ? (
           <form onSubmit={handleSubmit}>
             <div>
               <label>Reservation ID:</label>
@@ -121,6 +118,9 @@ function UpdateReservation({token, reservationsData}) {
             </div>
             <button type="submit">Update Reservation</button>
           </form>
+          ) : (
+            <p>No reservations found.</p>
+          )}
           {responseMessage && <p>{responseMessage}</p>}
         </div>
       </div>

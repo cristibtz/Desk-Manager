@@ -22,7 +22,7 @@ Run with `npm run dev`
 
 # Database setup
 Postgres database should initially be ran with docker using:
-`docker run --name app-db -e POSTGRES_USER="whatever" -e POSTGRES_PASSWORD="whatever" -e POSTGRES_DB="resource-manager" -p 5432:5432 postgres:latest`
+`docker run -d --name app-db -e POSTGRES_USER="whatever" -e POSTGRES_PASSWORD="whatever" -e POSTGRES_DB="resource-manager" -p 5432:5432 postgres:latest`
 
 Credentials will be read from a `.env` file which must be created in the `backend/` directory and should have the following fields:
 ```

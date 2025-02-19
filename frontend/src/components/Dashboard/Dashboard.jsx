@@ -24,9 +24,9 @@ function Dashboard() {
     useEffect(() => {
         if (authenticated && token) {
           fetchData(token);
+          fetchReservations(token).then(setReservationsData);
           fetchRooms(token).then(setRoomsData);
           fetchDesks(token).then(setDesksData);
-          fetchReservations(token).then(setReservationsData);
         }
     }, [authenticated, token]);
 
