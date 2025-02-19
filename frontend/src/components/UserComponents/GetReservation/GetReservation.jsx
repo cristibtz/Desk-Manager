@@ -50,12 +50,12 @@ function GetReservation() {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{reservation.id}</td>
-                            <td>{getRoomAlias(reservation.room_id, roomsData)}</td>
-                            <td>{getDeskNumber(reservation.desk_id, desksData)}</td>
-                            <td>{formatDate(reservation.start_date)}</td>
-                            <td>{formatDate(reservation.end_date)}</td>
-                            <td>{reservation.note}</td>
+                            <td>{reservationData.id}</td>
+                            <td>{getRoomAlias(reservationData.room_id, roomsData)}</td>
+                            <td>{getDeskNumber(reservationData.desk_id, desksData)}</td>
+                            <td>{formatDate(reservationData.start_date)}</td>
+                            <td>{formatDate(reservationData.end_date)}</td>
+                            <td>{reservationData.note}</td>
                         </tr>
                     </tbody>
                 </table>
