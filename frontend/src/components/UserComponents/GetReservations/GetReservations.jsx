@@ -23,7 +23,9 @@ function GetReservations({ token, roomsData, desksData })  {
 
   return (
     <div>
-      <h2>Reservations</h2>
+      <h2 className="text-2xl font-bold text-white underline p-4">
+        Reservations
+      </h2>
 
       <div className="table-container">
         {reservationsData.length > 0 ? (

@@ -7,7 +7,6 @@ import AdminPanel from "./components/AdminPanel/AdminPanel"
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { KeycloakProvider } from './KeycloakContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import "./css/App.css";
 
 function App() {
   return (

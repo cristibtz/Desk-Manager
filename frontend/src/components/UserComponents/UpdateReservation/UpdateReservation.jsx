@@ -37,7 +37,9 @@ function UpdateReservation({token, reservationsData = []}) {
 
     return (
       <div>
-        <h2>Update Reservation</h2>
+        <h2 className="text-2xl font-bold text-white underline p-4">
+          Update Reservations
+        </h2>
         <div>
           { reservationsData.length > 0 ? (
           <form onSubmit={handleSubmit}>

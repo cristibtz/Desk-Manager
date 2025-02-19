@@ -45,13 +45,18 @@ function Dashboard() {
     };
 
   return (
-    <div>
-      <h1>Welcome, {userInfo.name} ({userInfo.role}) !</h1>
-
-      <GetReservations token={token} roomsData={roomsData} desksData={desksData} />
-      <CreateReservation token={token} roomsData={roomsData} />
-      <UpdateReservation token={token} reservationsData={reservationsData} />
-      <DeleteReservation token={token} reservationsData={reservationsData} />
+    <div className="bg-[#f37f0c] h-screen w-screen ">
+      <div>
+          <h1 className="text-3xl text-center underline font-bold text-white p-4">
+            Welcome, {userInfo.name} ({userInfo.role}) !
+          </h1>
+      </div>
+      <div className="">
+        <GetReservations token={token} roomsData={roomsData} desksData={desksData} />
+        <CreateReservation token={token} roomsData={roomsData} />
+        <UpdateReservation token={token} reservationsData={reservationsData} />
+        <DeleteReservation token={token} reservationsData={reservationsData} />
+      </div>
     </div>
   );
 }

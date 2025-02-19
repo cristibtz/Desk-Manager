@@ -29,7 +29,9 @@ function DeleteReservation({token, reservationsData = []}) {
 
     return (
       <div>
-        <h2>Delete Reservation</h2>
+        <h2 className="text-2xl font-bold text-white underline p-4">
+          Delete Reservations
+        </h2>
         <div>
           {reservationsData.length > 0 ? (
           <form onSubmit={handleSubmit}>

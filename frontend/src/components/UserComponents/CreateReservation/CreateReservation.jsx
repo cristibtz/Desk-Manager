@@ -51,7 +51,9 @@ function CreateReservation({ token, roomsData }) {
 
   return (
     <div>
-      <h2>Create Reservation</h2>
+      <h2 className="text-2xl font-bold text-white underline p-4">
+        Create Reservations
+      </h2>
       <div>
         <form onSubmit={handleSubmit}>
         <div>
