@@ -135,6 +135,8 @@ VITE_KEYCLOAK_REALM="resource-manager"
 VITE_KEYCLOAK_CLIENT="resource-manager"
 VITE_KEYCLOAK_URL="http://localhost:8080" #Or the IP of the development machine
 VITE_BACKEND_API_URL="http://localhost:3000" #Or the IP of the development machine
+
+VITE_REQUIRED_ROLE="Admin"
 ```
 # Redoing keycloak setup for frontend
 1. Change URLs to the frontend ones in Keycloak for redirects

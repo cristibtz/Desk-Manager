@@ -10,12 +10,7 @@ function NavBar() {
     setNav(!nav);
   };
 
-  const navItems = [
-    { id: 1, text: 'Dashboard' },
-    { id: 2, text: 'Occupied Desks' },
-    { id: 3, text: 'Admin Panel' },
-    { id: 4, text: 'Logout' },
-  ];
+  const requiredRole = import.meta.env.VITE_REQUIRED_ROLE;
 
   return (
     <nav className="bg-white flex justify-between items-center h-32 max-w-auto mx-auto px-2 text-white whitespace-nowrap">
@@ -27,7 +22,7 @@ function NavBar() {
                 <>
                     <li className="p-4 text-[#f37f0c] hover:bg-[#f37f0c] rounded-xl m-2 cursor-pointer text-xl duration-300 hover:text-white whitespace-nowrap"><a href="/dashboard">Dashboard</a></li>
                     <li className="p-4 text-[#f37f0c] hover:bg-[#f37f0c] rounded-xl m-2 cursor-pointer text-xl duration-300 hover:text-white whitespace-nowrap"><a href="/occupied">Occupied desks</a></li>
-                    {role === "Admin" && (
+                    {role === requiredRole && (
                             <li className="p-4 text-[#f37f0c] hover:bg-[#f37f0c] rounded-xl m-2 cursor-pointer text-xl text-xlduration-300 hover:text-white whitespace-nowrap"><a href="/admin">Admin Panel</a></li>
                     )}
                     <li className="p-4 text-[#f37f0c] hover:bg-[#f37f0c] rounded-xl m-2 cursor-pointer text-xl duration-300 hover:text-white whitespace-nowrap"><a href="#" onClick={logout}>Logout</a></li>
@@ -51,7 +46,7 @@ function NavBar() {
                 <li className="p-4 border-b border-white-600">
                     <a href="/occupied">Occupied desks</a>
                 </li>
-                {role === "Admin" && (
+                {role === requiredRole && (
                     <li className="p-4 border-b border-white-600">
                     <a href="/admin">Admin Panel</a>
                     </li>
