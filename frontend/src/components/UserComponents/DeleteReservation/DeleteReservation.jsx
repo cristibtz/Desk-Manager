@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { createApiClient } from "../../../utils/apiClient";
+import { toast } from "react-toastify";
 
 function DeleteReservation({token, reservationsData = []}) {
-    const [responseMessage, setResponseMessage] = useState("");
     const [formData, setFormData] = useState({
         reservation_id: "",
      });
@@ -21,9 +21,9 @@ function DeleteReservation({token, reservationsData = []}) {
 
       try {
         const response = await apiClient.delete(`/user/reservations/${formData.reservation_id}`);
-        setResponseMessage(response.data.message || "Reservation deleted successfully!");
+        toast.success(response.data.message || "Reservation deleted successfully!");
       } catch (error) {
-        setResponseMessage(error.response?.data?.message || "Failed to delete reservation.");
+        toast.error(error.response?.data?.message || "Failed to delete reservation.");
       }
     };
 
@@ -56,7 +56,6 @@ function DeleteReservation({token, reservationsData = []}) {
           ) : (
             <div>No reservations available to delete.</div>
           )}
-          {responseMessage && <p>{responseMessage}</p>}
         </div>
       </div>
     );

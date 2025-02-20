@@ -2,16 +2,23 @@ import React, {useContext, useEffect, useState } from "react";
 import { KeycloakContext } from "../../KeycloakContext";
 import { createApiClient } from "../../utils/apiClient";
 import { formatDate } from "../../utils/formatDate";
+import { fetchDesks } from "../../utils/fetchDesks";
+import { fetchRooms } from "../../utils/fetchRooms";
+import { getDeskNumber, getRoomAlias } from "../../utils/mapRoomDesk";
 import "../../css/Table.css"
 
 function OccupiedDesks() {
 
-    const { authenticated, token, logout } = useContext(KeycloakContext);
+    const { authenticated, token } = useContext(KeycloakContext);
     const [occupied, setOccupiedData] = useState([]);
+    const [desksData, setDesksData] = useState(null);
+    const [roomsData, setRoomsData] = useState(null);
 
     useEffect(() => {
         if (authenticated && token) {
           fetchOccupied(token);
+          fetchDesks(token).then(setDesksData);
+          fetchRooms(token).then(setRoomsData);
         }
     }, [authenticated, token]);
 
@@ -32,8 +39,8 @@ function OccupiedDesks() {
             <table className="table">
                 <thead>
                 <tr>
-                    <th>Room ID</th>
-                    <th>Desk ID</th>
+                    <th>Room Name</th>
+                    <th>Desk Number</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                 </tr>
@@ -41,8 +48,8 @@ function OccupiedDesks() {
                 <tbody>
                 {occupied.map((desk) => (
                     <tr key={desk.desk_id}>
-                    <td>{desk.room_id}</td>
-                    <td>{desk.desk_id}</td>
+                    <td>{getRoomAlias(desk.room_id, roomsData)}</td>
+                    <td>{getDeskNumber(desk.desk_id, desksData)}</td>
                     <td>{formatDate(desk.start_date)}</td>
                     <td>{formatDate(desk.end_date)}</td>
                     </tr>

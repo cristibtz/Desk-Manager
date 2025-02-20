@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createApiClient } from "../../../utils/apiClient";
 import { fetchRoomDesks } from "../../../utils/fetchRoomDesks";
+import { toast } from "react-toastify";
 function CreateReservation({ token, roomsData }) {
 
   const [formData, setFormData] = useState({
@@ -36,17 +37,22 @@ function CreateReservation({ token, roomsData }) {
 
     const durationInMinutes = parseInt(formData.duration, 10);
 
+    const localDate = new Date(formData.start_date);
+    const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
+
     const formDataToSend = {
       ...formData,
+      start_date: utcDate.toISOString(),
       duration: durationInMinutes
     };
 
     try {
+        console.log(formDataToSend);
         const response = await apiClient.post("/user/reservations", formDataToSend);
-        setResponseMessage(response.data.message || "Reservation created successfully!");
-    } catch (error) {
-      setResponseMessage(error.response?.data?.message || "Failed to create reservation.");
-    }
+        toast.success(response.data.message || "Reservation created successfully!");
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to create reservation.");
+      }
   };
 
   return (
@@ -159,7 +165,6 @@ function CreateReservation({ token, roomsData }) {
           </div>
           <button type="submit">Create Reservation</button>
         </form>
-        {responseMessage && <p>{responseMessage}</p>}
       </div>
     </div>
   );

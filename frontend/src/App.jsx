@@ -1,5 +1,7 @@
 import Dashboard from './components/Dashboard/Dashboard';
 import Landing from './components/Landing/Landing';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import OccupiedDesks from './components/OccupiedDesks/OccupiedDesks';
 import GetReservation from './components/UserComponents/GetReservation/GetReservation';
 import NavBar from './components/NavBar/NavBar';
@@ -11,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Landing />} />
         
@@ -32,7 +35,7 @@ function App() {
               
               <Route path="occupied" element={
                 <ProtectedRoute>
-                  <OccupiedDesks />
+                  <OccupiedDesks  />
                 </ProtectedRoute>
               } />
               

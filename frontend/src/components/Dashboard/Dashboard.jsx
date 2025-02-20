@@ -45,7 +45,7 @@ function Dashboard() {
     };
 
   return (
-    <div className="bg-[#f37f0c] h-screen w-screen ">
+    <div className="bg-[#f37f0c]">
       <div>
           <h1 className="text-3xl text-center underline font-bold text-white p-4">
             Welcome, {userInfo.name} ({userInfo.role}) !
