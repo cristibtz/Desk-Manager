@@ -51,11 +51,22 @@ function Dashboard() {
             Welcome, {userInfo.name} ({userInfo.role}) !
           </h1>
       </div>
-      <div className="">
-        <GetReservations token={token} roomsData={roomsData} desksData={desksData} />
-        <CreateReservation token={token} roomsData={roomsData} />
-        <UpdateReservation token={token} reservationsData={reservationsData} />
-        <DeleteReservation token={token} reservationsData={reservationsData} />
+      <GetReservations token={token} roomsData={roomsData} desksData={desksData} />
+
+      <h2 className="text-3xl text-center underline font-bold text-white p-4">Manage Reservations</h2>
+
+      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 p-4">
+        <div className="flex-grow w-full">
+          <UpdateReservation token={token} reservationsData={reservationsData} />
+        </div>
+        
+        <div className="flex-grow w-full">
+          <CreateReservation token={token} roomsData={roomsData} />
+        </div>
+        
+        <div className="flex-grow w-full">
+          <DeleteReservation token={token} reservationsData={reservationsData} />
+        </div>
       </div>
     </div>
   );

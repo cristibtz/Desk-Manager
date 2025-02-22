@@ -27,7 +27,6 @@ function OccupiedDesks() {
       const apiClient = createApiClient(token);
     
       const occupiedDesks = await apiClient.get('/occupied');
-      console.log(occupiedDesks.data);
       
       setOccupiedData(occupiedDesks.data);
 
@@ -46,8 +45,8 @@ function OccupiedDesks() {
                 </tr>
                 </thead>
                 <tbody>
-                {occupied.map((desk) => (
-                    <tr key={desk.desk_id}>
+                {occupied.map((desk, index) => (
+                    <tr key={`${desk.desk_id}-${desk.room_id}-${index}`}>
                     <td>{getRoomAlias(desk.room_id, roomsData)}</td>
                     <td>{getDeskNumber(desk.desk_id, desksData)}</td>
                     <td>{formatDate(desk.start_date)}</td>
