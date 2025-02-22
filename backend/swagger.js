@@ -1,5 +1,5 @@
 const swaggerAutogen = require('swagger-autogen')()
-
+const dotenv = require('dotenv').config();
 
 const doc = {
     info: {
@@ -7,7 +7,7 @@ const doc = {
         title: "Desk Manager API",
         description: "Desk Manager API Documentation",
     },
-    host: "192.168.100.179:3000",
+    host: process.env.SWAGGER_HOST,
     basePath: "/",
     schemes: ['http'],
     consumes: ['x-www-form-urlencoded'],

@@ -1,10 +1,10 @@
 const express = require('express')
-const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 const logger = require('pino')();
 require('dotenv').config();
 const { keycloak, exported_session, getUserInfoFromTokenHeader } = require('./auth/auth.js');
 
+const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json')
 const bodyParser = require('body-parser')
 
@@ -24,9 +24,6 @@ const app = express()
 const port = 3000
 
 app.use(express.json());
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
 
 //API Docs
 app.use(bodyParser.json())
@@ -48,6 +45,7 @@ app.use(cors({
 //Routes
 app.use(routes);
 
+/*
 app.get('/', keycloak.protect(), async (req, res) => {
 
   userInfo = await getUserInfoFromTokenHeader(req);
@@ -57,7 +55,7 @@ app.get('/', keycloak.protect(), async (req, res) => {
 
   res.status(200).render('home', {role: role, name: name});
 });
-
+*/
 
 app.get('/userinfo', keycloak.protect(), async (req, res) => {
 
