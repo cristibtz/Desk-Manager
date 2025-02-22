@@ -1,10 +1,12 @@
 const express = require('express')
-const swaggerUI = require('swagger-ui-express');
-const YAML = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 const logger = require('pino')();
 require('dotenv').config();
 const { keycloak, exported_session, getUserInfoFromTokenHeader } = require('./auth/auth.js');
+
+const swaggerFile = require('./swagger-output.json')
+const bodyParser = require('body-parser')
 
 const publicGetRoutes = require('./routes/publicRoutes/publicGetRoutes.js');
 
@@ -18,8 +20,6 @@ const userDeleteRoutes = require('./routes/userRoutes/userDeleteRoutes');
 
 const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes, publicGetRoutes];
 
-const swaggerDocument = YAML.load('./swagger.yaml');
-
 const app = express()
 const port = 3000
 
@@ -29,8 +29,8 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
 //API Docs
-app.use(express.urlencoded({extended: true}));
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use(bodyParser.json())
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 //Session
 app.use(exported_session);
