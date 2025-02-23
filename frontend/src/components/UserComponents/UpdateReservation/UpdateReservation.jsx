@@ -8,7 +8,6 @@ function UpdateReservation({ token, reservationsData = [] }) {
     new_start_date: "",
     duration: "",
   });
-  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -131,7 +130,7 @@ function UpdateReservation({ token, reservationsData = [] }) {
             </div>
           </form>
         ) : (
-          <p>No reservations found.</p>
+          <p className="text-center text-white">No reservations found.</p>
         )}
       </div>
     </div>

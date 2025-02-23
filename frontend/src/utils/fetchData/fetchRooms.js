@@ -1,4 +1,4 @@
-import { createApiClient } from './apiClient';
+import { createApiClient } from '../apiClient';
 
 export const fetchRooms = async (token) => {
     try {

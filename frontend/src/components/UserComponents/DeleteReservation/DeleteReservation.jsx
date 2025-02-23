@@ -57,7 +57,7 @@ function DeleteReservation({ token, reservationsData = [] }) {
             </div>
           </form>
         ) : (
-          <div>No reservations available to delete.</div>
+          <p className="text-center text-white">No reservations found.</p>
         )}
       </div>
     </div>

@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { KeycloakContext } from "../../../KeycloakContext";
 
-import { fetchDesks } from "../../../utils/fetchDesks";
-import { fetchRooms } from "../../../utils/fetchRooms";
+import { fetchDesks } from "../../../utils/fetchData/fetchDesks";
+import { fetchRooms } from "../../../utils/fetchData/fetchRooms";
 import { formatDate } from "../../../utils/formatDate";
 import { getDeskNumber, getRoomAlias } from "../../../utils/mapRoomDesk";
-import { fetchReservation } from "../../../utils/fetchReservation";
+import { fetchReservation } from "../../../utils/fetchData/fetchReservation";
 
-import "../../../css/Table.css"; 
+import Table from "../../TableComponents/Table";
+import TableCell from "../../TableComponents/TableCell";
 
 function GetReservation() {
     const { id } = useParams();
@@ -25,43 +26,33 @@ function GetReservation() {
         }
     }, [authenticated, token, id]);
     
-    if(!reservationData) {
-        return <div>Reservation not found</div>
+    if (!reservationData) {
+        return <div>Reservation not found</div>;
     }
 
-    if(!reservationData || !desksData || !roomsData) {
-        return <div>Loading...</div>
+    if (!reservationData || !desksData || !roomsData) {
+        return <div>Loading...</div>;
     }
+
+    const columns = ["Reservation ID", "Room Name", "Desk Number", "Start Date", "End Date", "Note"];
+
+    const renderRow = (reservation) => (
+        <>
+            <TableCell>{reservation.id}</TableCell>
+            <TableCell>{getRoomAlias(reservation.room_id, roomsData)}</TableCell>
+            <TableCell>{getDeskNumber(reservation.desk_id, desksData)}</TableCell>
+            <TableCell>{formatDate(reservation.start_date)}</TableCell>
+            <TableCell>{formatDate(reservation.end_date)}</TableCell>
+            <TableCell>{reservation.note}</TableCell>
+        </>
+    );
 
     return (
-        <div className="table-container">
-            <h1>Reservation Details</h1>
-            {reservationData ? (
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Reservation ID</th>
-                            <th>Room Name</th>
-                            <th>Desk Number</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Note</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{reservationData.id}</td>
-                            <td>{getRoomAlias(reservationData.room_id, roomsData)}</td>
-                            <td>{getDeskNumber(reservationData.desk_id, desksData)}</td>
-                            <td>{formatDate(reservationData.start_date)}</td>
-                            <td>{formatDate(reservationData.end_date)}</td>
-                            <td>{reservationData.note}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            ) : (
-                <p>No reservation found.</p>
-            )}
+        <div className="min-h-screen bg-[#f37f0c]">
+            <h1 className="text-2xl font-bold text-white underline p-4">
+                Reservation Details
+            </h1>
+            <Table columns={columns} data={[reservationData]} renderRow={renderRow} />
         </div>
     );
 }

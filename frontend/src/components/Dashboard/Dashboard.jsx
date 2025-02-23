@@ -7,11 +7,9 @@ import UpdateReservation from "../UserComponents/UpdateReservation/UpdateReserva
 import DeleteReservation from "../UserComponents/DeleteReservation/DeleteReservation";
 
 import { createApiClient } from "../../utils/apiClient";
-import { fetchRooms } from "../../utils/fetchRooms";
-import { fetchDesks } from "../../utils/fetchDesks";
-import { fetchReservations } from "../../utils/fetchReservations";
-
-import "../../css/Table.css"
+import { fetchRooms } from "../../utils/fetchData/fetchRooms";
+import { fetchDesks } from "../../utils/fetchData/fetchDesks";
+import { fetchReservations } from "../../utils/fetchData/fetchReservations";
 
 function Dashboard() {
 
@@ -45,7 +43,7 @@ function Dashboard() {
     };
 
   return (
-    <div className="bg-[#f37f0c]">
+    <div className="bg-[#f37f0c] min-h-screen">
       <div>
           <h1 className="text-3xl text-center underline font-bold text-white p-4">
             Welcome, {userInfo.name} ({userInfo.role}) !

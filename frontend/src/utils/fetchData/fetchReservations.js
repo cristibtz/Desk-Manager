@@ -1,4 +1,4 @@
-import { createApiClient } from './apiClient';
+import { createApiClient } from '../apiClient';
 
 export const fetchReservations = async (token) => {
     try {

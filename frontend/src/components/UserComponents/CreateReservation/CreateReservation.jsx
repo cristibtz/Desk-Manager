@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createApiClient } from "../../../utils/apiClient";
-import { fetchRoomDesks } from "../../../utils/fetchRoomDesks";
+import { fetchRoomDesks } from "../../../utils/fetchData/fetchRoomDesks";
 import { toast } from "react-toastify";
 
 function CreateReservation({ token, roomsData }) {
