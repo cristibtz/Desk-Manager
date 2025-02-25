@@ -148,3 +148,20 @@ Web origins will remain like this for now.
 2. In Advanced settings, change PKCE like in the photo
 
 ![photo](photos/frontend-kc-2.png)
+
+# Testing
+For testing purposes, add:
+```
+test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/testing/setup.js',
+}
+```
+in `vite.config.js` plugins array.
+
+Also, add:
+`"test": "vitest"`
+in `package.json` scripts objects.
+
+Then, run in frontend folder `npx vitest` or `npm run test`.
