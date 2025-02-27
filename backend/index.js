@@ -8,7 +8,9 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json')
 const bodyParser = require('body-parser')
 
-const publicGetRoutes = require('./routes/publicRoutes/publicGetRoutes.js');
+const roomGetRoutes = require('./routes/roomRoutes/roomGetRoutes.js');
+const deskGetRoutes = require('./routes/deskRoutes/deskGetRoutes.js');
+
 
 const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
 const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
@@ -18,7 +20,7 @@ const userGetRoutes = require('./routes/userRoutes/userGetRoutes');
 const userPostRoutes = require('./routes/userRoutes/userPostRoutes');
 const userDeleteRoutes = require('./routes/userRoutes/userDeleteRoutes');
 
-const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes, publicGetRoutes];
+const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes, roomGetRoutes, deskGetRoutes];
 
 const app = express()
 const port = 3000
