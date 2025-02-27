@@ -1,0 +1,475 @@
+openapi: 3.0.3
+info:
+  title: Resource Manager API
+  description: Resource Manager application for managing shared resources such as work rooms which contain desks. Employees, students of an institution can book them for certain time ranges.
+  
+  version: 1.0.0
+tags:
+  - name: admin
+    description: Admin endpoints of the app
+
+  - name: user
+    description: User endpoints of the app
+
+paths:
+  /reservations:
+    get:
+      tags:
+        - admin
+      summary: Retrieve info about all the existing reservations
+      description: The admin can retrieve info about all the upcoming reservations of the users
+      operationId: getReservations
+      responses:
+        '200':
+          description: Successful retrieval of all reservations
+        '404':
+          description: No reservations not found
+    post:
+      tags:
+        - admin
+      summary: Create a reservation 
+      description: Create a reservation on behalf of a user
+      operationId: createReservation
+      responses:
+        '201':
+          description: Successful creation of a reservation
+        '400':
+          description: Bad request
+        
+  /reservations/{reservation_id}:
+    get:
+      tags:
+        - admin
+      summary: Retrieve info about only one reservation
+      description: The admin can retrieve info about only one reservation
+      operationId: getReservation
+      parameters:
+        - name: reservation_id
+          in: path
+          description: ID of the reservation to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful retrieval of one reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+  
+    post:
+      tags:
+        - admin
+      summary: Update a reservation
+      description: The admin can update a reservation on behalf of a user
+      operationId: updateReservation
+      parameters:
+        - name: reservation_id
+          in: path
+          description: ID of the reservation to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful update of a reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+            
+    delete:
+      tags:
+        - admin
+      summary: Delete a reservation
+      description: The admin can delete any reservation
+      operationId: deleteReservation
+      parameters:
+        - name: reservation_id
+          in: path
+          description: ID of the reservation to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful deletion of a reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+    
+  /users:
+    get:
+      tags:
+        - admin
+      summary: Get all registered users of the app
+      description: The admin can access the info of all the users registered on the app
+      operationId: getUsers
+      responses:
+        '200':
+          description: Successful retrieval of users
+        '400':
+          description: Bad request
+        '404':
+          description: No users found
+          
+  /users/{user_id}:
+    get:
+      tags:
+        - admin
+      summary: Retrieve info about only one user
+      description: The admin can retrieve info about only one user
+      operationId: getUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful retrievel of a single user
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+          
+    delete:
+      tags:
+        - admin
+      summary: Deletes a user
+      description: The admin can delete a user from the platform
+      operationId: deleteUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of user to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: User deleted succesfully
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+          
+  /users/{user_id}/reservations:
+    get:
+      tags:
+        - admin
+      summary: Retrieve reservations of a user
+      description: The admin can retrieve only the reservations of a single user
+      operationId: getUserReservations
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of the user to retrieve his reservations
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful retrieve of user's reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+          
+  /rooms:
+    get:
+      tags:
+        - admin
+      summary: Retrieve info about all rooms available
+      description: The admin can access the info about all the rooms on the app
+      operationId: getRooms
+      responses:
+        '200':
+          description: Succesfull retrieval of room info
+        '400':
+          description: Bad request
+        '404':
+          description: No rooms found
+    post:
+      tags:
+        - admin
+      summary: Create a room
+      description: The admin can create rooms that contain desks to be booked by users
+      operationId: createRoom
+      responses:
+        '200':
+          description: Succesful creation of a room
+        '400':
+          description: Bad request
+  /rooms/{room_number}:
+    get:
+      tags:
+        - admin
+      summary: Retrieve info about a room 
+      description: The admin can retrieve info about a single room
+      operationId: getRoom
+      parameters:
+        - name: room_number
+          in: path
+          description: The number of the room to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Succesful retrieval of room info
+        '400':
+          description: Bad request
+        '404':
+          description: Room not found
+    post:
+      tags:
+        - admin
+      summary: Update a room
+      description: The admin can update a room's info
+      operationId: updateRoom
+      parameters:
+        - name: room_number
+          in: path
+          description: The number of the room to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Succesful update of a room
+        '400':
+          description: Bad request
+        '404':
+          description: Room not found
+          
+  /rooms/{room_id}/desks:
+    get:
+      tags:
+        - admin
+      summary: Get desk's from a room info
+      description: The admin can get the info of alll the desks in a room
+      operationId: getRoomDesks
+      parameters:
+        - name: room_id
+          in: path
+          description: The id of the room to retrieve desk info from
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Succesful retrieval of a room's desks
+        '400':
+          description: Bad request
+        '404':
+          description: No desks found
+  /desks:
+    get:
+      tags:
+          - admin
+      summary: Get info about all desks
+      description: The admin can get the info of all the desks available
+      operationId: getDesks
+      responses:
+        '200':
+          description: Succesful retrieval of a desks' info
+        '400':
+          description: Bad request
+        '404':
+          description: No desks found
+    post:
+      tags:
+          - admin
+      summary: Create a desk
+      description: The admin can create a desk for users to book
+      operationId: createDesk
+      responses:
+        '200':
+          description: Succesful creation of a desk
+        '400':
+          description: Bad request
+  /desks/{desk_id}:
+    get:
+        tags:
+            - admin
+        summary: Get info about a desk
+        description: The admin can get the info of a desk
+        operationId: getDesk
+        parameters:
+        - name: desk_id
+          in: path
+          description: The id of the desk to get info from
+          required: true
+          schema:
+            type: integer
+            format: int64
+        responses:
+          '200':
+            description: Succesful retrieval of a desk's info
+          '400':
+            description: Bad request
+          '404':
+            description: No desk found
+    post:
+        tags:
+            - admin
+        summary: Update info about a desk
+        description: The admin can update the info of a desk
+        operationId: updateDesk
+        parameters:
+        - name: desk_id
+          in: path
+          description: The id of the desk to update its info
+          required: true
+          schema:
+            type: integer
+            format: int64
+        responses:
+          '200':
+            description: Succesful update of a desk's info
+          '400':
+            description: Bad request
+          '404':
+            description: No desk found
+    
+    delete:
+      tags:
+          - admin
+      summary: Delete a desk
+      description: The admin can delete a desk
+      operationId: deleteDesk
+      parameters:
+      - name: desk_id
+        in: path
+        description: The id of the desk to delete 
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Succesful deletion of a desk
+        '400':
+          description: Bad request
+        '404':
+          description: No desk found
+        
+  /user/reservations:
+    get:
+      tags:
+        - user
+      summary: Retrieves all reservations of a user
+      description: Retrieves all reservations of a user
+      operationId: getUserReservationsOfUser
+      responses:
+        '200':
+          description: Successful retrieval of user's reservations
+        '404':
+          description: Reservations not found
+        
+    post:
+      tags:
+        - user
+      summary: Create a reservation
+      description: The user can create its own reservation
+      operationId: createReservationOfUser
+      responses:
+        '200':
+          description: Successful creation of a user's reservations
+        '400':
+          description: Reservations not found
+          
+  /user/reservations/{reservation_id}:
+    get:
+      tags:
+        - user
+      summary: Retrieve info about only one reservation
+      description: The user can retrieve info about only one of its reservations
+      operationId: getReservationById
+      parameters:
+      - name: reservation_id
+        in: path
+        description: ID of the reservation to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Successful retrieval of one reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+  
+    post:
+      tags:
+        - user
+      summary: Update a reservation
+      description: The user can update one of its reservations
+      operationId: updateReservationById
+      parameters:
+        - name: reservation_id
+          in: path
+          description: ID of the reservation to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful update of a reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+      
+    delete:
+      tags:
+        - user
+      summary: Delete a reservation
+      description: The user can delete one of its reservations
+      operationId: deleteReservationById
+      parameters:
+        - name: reservation_id
+          in: path
+          description: ID of the reservation to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful deletion of a reservation
+        '400':
+          description: Bad request
+        '404':
+          description: Reservation not found
+      
+  /occupied:
+    get:
+      tags:
+        - user
+      summary: Retrieve info about existing reservation
+      description: The user can see the already existing reservation in order to decide how to book desks
+      operationId: getOccupied
+      responses:
+        '200': 
+          description: Successful retrieval of reservations' info
+        '404': 
+          description: No reservations found
+      
