@@ -45,18 +45,6 @@ app.use(cors({
 //Routes
 app.use(routes);
 
-/*
-app.get('/', keycloak.protect(), async (req, res) => {
-
-  userInfo = await getUserInfoFromTokenHeader(req);
-
-  const name = userInfo.name;
-  const role = userInfo.roles.includes('admin') ? 'admin' : 'user';
-
-  res.status(200).render('home', {role: role, name: name});
-});
-*/
-
 app.get('/userinfo', keycloak.protect(), async (req, res) => {
 
   userInfo = await getUserInfoFromTokenHeader(req);
