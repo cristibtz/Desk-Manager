@@ -1,4 +1,5 @@
 const Reservations = require("../../database/models").Reservations;
+const { getUserInfoFromTokenHeader } = require('../../auth/auth.js');
 
 const { param, validationResult } = require('express-validator');
 

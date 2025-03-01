@@ -10,17 +10,18 @@ const bodyParser = require('body-parser')
 
 const roomGetRoutes = require('./routes/roomRoutes/roomGetRoutes.js');
 const deskGetRoutes = require('./routes/deskRoutes/deskGetRoutes.js');
+const reservationGetRoutes = require('./routes/reservationRoutes/reservationGetRoutes.js');
+
+const roomPostRoutes = require('./routes/roomRoutes/roomPostRoutes.js');
+const deskPostRoutes = require('./routes/deskRoutes/deskPostRoutes.js');
+const reservationPostRoutes = require('./routes/reservationRoutes/reservationPostRoutes.js');
+
+const roomDeleteRoutes = require('./routes/roomRoutes/roomDeleteRoutes.js');
+const deskDeleteRoutes = require('./routes/deskRoutes/deskDeleteRoutes.js');
+const reservationDeleteRoutes = require('./routes/reservationRoutes/reservationDeleteRoutes.js');
 
 
-const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
-const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
-const adminDeleteRoutes = require('./routes/adminRoutes/adminDeleteRoutes');
-
-const userGetRoutes = require('./routes/userRoutes/userGetRoutes');
-const userPostRoutes = require('./routes/userRoutes/userPostRoutes');
-const userDeleteRoutes = require('./routes/userRoutes/userDeleteRoutes');
-
-const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes, roomGetRoutes, deskGetRoutes];
+const routes = [roomGetRoutes, deskGetRoutes, reservationGetRoutes, roomPostRoutes, deskPostRoutes, reservationPostRoutes, roomDeleteRoutes, deskDeleteRoutes, reservationDeleteRoutes];
 
 const app = express()
 const port = 3000

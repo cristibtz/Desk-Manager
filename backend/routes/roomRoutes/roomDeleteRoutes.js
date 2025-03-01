@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const roomControllersDelete = require('../../controllers/roomControllersDelete/roomControllersDelete.js');
+const roomControllersDelete = require('../../controllers/roomControllers/roomControllersDelete.js');
 
 const { keycloak, exported_session } = require('../../auth/auth.js');
 
