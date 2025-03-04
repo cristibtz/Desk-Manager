@@ -41,7 +41,7 @@ app.use( keycloak.middleware({
 
 //CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://192.168.100.179:5173'],
+  origin: ['http://localhost:5173', 'http://192.168.100.179:5173', 'http://192.168.100.179'],
   credentials: true
 }));
 
