@@ -1,0 +1,43 @@
+services:
+  backend:
+    restart: always
+    container_name: backend
+    build: ./backend
+    volumes:
+      - ./backend:/desk-manager-backend
+    env_file:
+      - backend/.env
+    networks: 
+        - desk-manager
+    ports: 
+        - "3000:3000"
+    command: npm run dev
+  
+  frontend:
+    restart: always
+    container_name: frontend
+    build: ./frontend
+    volumes:
+      - ./frontend:/desk-manager-frontend
+    env_file:
+      - frontend/.env
+    networks: 
+        - desk-manager
+    ports:
+      - "5173:5173"
+    command: npm run dev
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - desk-manager
+
+networks: 
+  desk-manager:
+    driver: bridge
