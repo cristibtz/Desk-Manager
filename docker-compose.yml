@@ -34,20 +34,7 @@ services:
     depends_on:
       - backend
     ports:
-      - "5173:5173"
-    command: npm run dev
-
-  nginx:
-    build: ./nginx
-    container_name: nginx
-    ports:
       - "80:80"
-    depends_on:
-      - frontend
-      - backend
-      - pg_database
-    networks:
-      - desk-manager
 
 networks: 
   desk-manager:

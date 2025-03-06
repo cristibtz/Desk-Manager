@@ -1,12 +1,25 @@
-# build environment
+# Frontend
 FROM node:22.13.1-alpine AS build
 
-WORKDIR /desk-manager-frontend
+WORKDIR /resource-manager-frontend
 
 COPY package.json ./
 
 COPY package-lock.json ./
 
-RUN npm install
+RUN npm ci --silent
 
 COPY . ./
+
+RUN npm run build
+
+# Nginx
+FROM nginx:stable-alpine
+
+COPY --from=build /resource-manager-frontend/dist /usr/share/nginx/html
+
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
