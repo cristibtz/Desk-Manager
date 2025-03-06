@@ -165,3 +165,5 @@ Also, add:
 in `package.json` scripts objects.
 
 Then, run in frontend folder `npx vitest` or `npm run test`.
+
+# <i>Dockerization</i>

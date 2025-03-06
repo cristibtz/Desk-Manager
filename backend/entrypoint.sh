@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MIGRATION_FLAG="/tmp/ran_migrations"
+MIGRATION_FLAG="/desk-manager-backend/ran_migrations/migrations_applied"
 
 if [ ! -f "$MIGRATION_FLAG" ]; then
   echo "Running migrations..."

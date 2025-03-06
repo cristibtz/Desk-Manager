@@ -6,6 +6,4 @@ COPY . .
 
 RUN npm install
 
-USER node
-
 EXPOSE 3000

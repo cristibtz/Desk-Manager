@@ -16,6 +16,8 @@ services:
     restart: always
     container_name: backend
     build: ./backend
+    volumes:
+      - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
     networks: 
         - desk-manager
     depends_on:
