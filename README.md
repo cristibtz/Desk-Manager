@@ -42,8 +42,6 @@ KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
 KEYCLOAK_URL="http://localhost:8080/" #Or the IP of the development machine
 KEYCLOAK_SECRET="secret_from_the_oidc_json_file"
-KEYCLOAK_CLI_ADMIN="user_with_admin_role_of_the_resource-manager_app"
-KEYCLOAK_CLI_ADMIN_PASS=PASSWORD
 ```
 >The user which will access Keycloak via admin-cli must have view-users role assigned
 

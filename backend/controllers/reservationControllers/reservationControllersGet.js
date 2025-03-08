@@ -59,7 +59,7 @@ exports.getReservation = [
 ]
 
 exports.getUserReservationsByAdmin = [
-    param('user_id').isInt().withMessage('Item must be an integer'),
+    param('user_id').isString().withMessage('Item must be a string'),
 
     async (req, res) => {
         const errors = validationResult(req);
