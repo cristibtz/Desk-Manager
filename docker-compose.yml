@@ -1,46 +1,49 @@
+version: '3.8'
+
 services:
   pg_database:
     restart: always
-    container_name: pg_database
     image: postgres:latest
     volumes: 
-      - postgres-data:/var/lib/postgresql
+      - postgres-data:/var/lib/postgresql/data
     environment: 
-        POSTGRES_DB: ${DB_NAME}
-        POSTGRES_USER: ${DB_USER}
-        POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
     networks:
       - desk-manager
+    deploy:
+      replicas: 1
 
   backend:
-    restart: always
-    container_name: backend
-    build: ./backend
+    image: localhost:5000/desk-manager-backend:latest
     volumes:
       - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
     networks: 
-        - desk-manager
+      - desk-manager
     depends_on:
       - pg_database
     ports: 
-        - "3000:3000"
+      - "3000:3000"
     entrypoint: /bin/sh -c "sleep 10 && ./entrypoint.sh"
-   
+    deploy:
+      replicas: 3
 
   frontend:
-    restart: always
-    container_name: frontend
-    build: ./frontend
+    image: localhost:5000/desk-manager-frontend:latest
     networks: 
-        - desk-manager
+      - desk-manager
     depends_on:
       - backend
     ports:
       - "80:80"
+    deploy:
+      replicas: 3
 
 networks: 
   desk-manager:
-    driver: bridge
+    driver: overlay
+    attachable: true
 
 volumes:
   postgres-data:
