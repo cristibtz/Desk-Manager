@@ -12,7 +12,9 @@ services:
       - desk-manager
 
   backend:
-    image: desk-manager-backend:latest
+    restart: always
+    container_name: desk-manager-backend
+    build: ./backend
     volumes:
       - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
     networks: 
@@ -24,7 +26,9 @@ services:
     entrypoint: /bin/sh -c "sleep 30 && ./entrypoint.sh"
 
   frontend:
-    image: desk-manager-frontend:latest
+    restart: always
+    container_name: desk-manager-frontend
+    build: ./frontend
     networks: 
       - desk-manager
     depends_on:
@@ -35,8 +39,7 @@ services:
 networks: 
   desk-manager:
     name: desk-manager
-    driver: overlay
-    attachable: true
+    driver: bridge
 
 volumes:
   postgres-data:

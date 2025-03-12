@@ -1,15 +1,18 @@
 services:
   pg_database:
-    restart: always
     image: postgres:latest
     volumes: 
-      - postgres-data:/var/lib/postgresql/data
-    environment: 
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
+      - postgres-data-stack:/var/lib/postgresql/data
+    secrets:
+      - pg_db_name
+      - pg_db_user
+      - pg_db_pass
+    environment:
+      - POSTGRES_DB_FILE=/run/secrets/pg_db_name
+      - POSTGRES_USER_FILE=/run/secrets/pg_db_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pg_db_pass
     networks:
-      - desk-manager
+      - desk-manager-stack
     deploy:
       replicas: 1
 
@@ -18,7 +21,7 @@ services:
     volumes:
       - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
     networks: 
-      - desk-manager
+      - desk-manager-stack
     depends_on:
       - pg_database
     ports: 
@@ -30,7 +33,7 @@ services:
   frontend:
     image: localhost:5000/desk-manager-frontend:latest
     networks: 
-      - desk-manager
+      - desk-manager-stack
     depends_on:
       - backend
     ports:
@@ -39,10 +42,18 @@ services:
       replicas: 3
 
 networks: 
-  desk-manager:
-    name: desk-manager
+  desk-manager-stack:
+    name: desk-manager-stack
     driver: overlay
     attachable: true
 
 volumes:
-  postgres-data:
+  postgres-data-stack:
+
+secrets:
+  pg_db_name:
+    external: true
+  pg_db_user:
+    external: true
+  pg_db_pass:
+    external: true
