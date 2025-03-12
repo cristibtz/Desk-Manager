@@ -165,3 +165,31 @@ in `package.json` scripts objects.
 Then, run in frontend folder `npx vitest` or `npm run test`.
 
 # <i>Dockerization</i>
+
+Docker command for initial setup
+
+```
+docker network --driver overlay desk-manager
+
+docker service create --name registry --publish published=5000,target=5000 registry:2
+
+docker compose up --build
+docker compose down --volumes
+
+docker tag desk-manager-backend:latest localhost:5000/desk-manager-backend:latest
+docker tag desk-manager-frontend:latest localhost:5000/desk-manager-frontend:latest
+
+docker push localhost:5000/desk-manager-backend:latest
+docker push localhost:5000/desk-manager-frontend:latest
+
+docker stack deploy -c docker-compose.yml desk-manager
+```
+
+Commands for management
+```
+docker service ls
+
+docker service logs <NAME>
+
+docker network ls
+```
