@@ -169,12 +169,11 @@ Then, run in frontend folder `npx vitest` or `npm run test`.
 Docker command for initial setup
 
 ```
-docker network --driver overlay desk-manager
 
 docker service create --name registry --publish published=5000,target=5000 registry:2
 
-docker compose up --build
-docker compose down --volumes
+docker build -t desk-manager-backend:latest backend/
+docker build -t desk-manager-frontend:latest frontend/
 
 docker tag desk-manager-backend:latest localhost:5000/desk-manager-backend:latest
 docker tag desk-manager-frontend:latest localhost:5000/desk-manager-frontend:latest
@@ -182,7 +181,9 @@ docker tag desk-manager-frontend:latest localhost:5000/desk-manager-frontend:lat
 docker push localhost:5000/desk-manager-backend:latest
 docker push localhost:5000/desk-manager-frontend:latest
 
-docker stack deploy -c docker-compose.yml desk-manager
+docker network create --driver overlay desk-manager
+
+docker stack deploy -c docker-compose-stack.yml desk-manager
 ```
 
 Commands for management

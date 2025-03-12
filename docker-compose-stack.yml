@@ -10,9 +10,11 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS}
     networks:
       - desk-manager
+    deploy:
+      replicas: 1
 
   backend:
-    image: desk-manager-backend:latest
+    image: localhost:5000/desk-manager-backend:latest
     volumes:
       - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
     networks: 
@@ -21,16 +23,20 @@ services:
       - pg_database
     ports: 
       - "3000:3000"
-    entrypoint: /bin/sh -c "sleep 30 && ./entrypoint.sh"
+    entrypoint: /bin/sh -c "sleep 10 && ./entrypoint.sh"
+    deploy:
+      replicas: 3
 
   frontend:
-    image: desk-manager-frontend:latest
+    image: localhost:5000/desk-manager-frontend:latest
     networks: 
       - desk-manager
     depends_on:
       - backend
     ports:
       - "80:80"
+    deploy:
+      replicas: 3
 
 networks: 
   desk-manager:

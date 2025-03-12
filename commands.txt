@@ -4,3 +4,5 @@ docker ps -a --format '{{.Names}}' | grep -v 'keycloak' | xargs -r docker rm
 docker images --format '{{.Repository}}:{{.Tag}}' | grep -v 'keycloak' | xargs -r docker rmi
 docker volume prune -f
 docker network ls --format '{{.Name}}' | grep -v -E 'bridge|host|none' | xargs -r docker network rm
+
+#If the pg database doesnt work after this, delete all its previous volumes.
