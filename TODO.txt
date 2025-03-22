@@ -1,4 +1,5 @@
 1. Dockerize the app !Done!
 2. Implement admin functionality
-    2.1 Modify admin's on user operations
-3. Solve migrations problem
+    2.1 Modify admin's on user operations !DONE!
+    2.2 Admin can 
+3. Solve migrations problem !DONE!
