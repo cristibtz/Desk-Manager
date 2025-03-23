@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { fetchRoomDesks } from "../../../utils/fetchData/AdminData/fetchRoomDesks";
+import { fetchRoomDesks } from "../../../utils/fetchData/fetchRoomDesks";
 import { getRoomAlias } from "../../../utils/mapRoomDesk";
-import { fetchRooms } from "../../../utils/fetchData/AdminData/fetchRooms";
+import { fetchRooms } from "../../../utils/fetchData/fetchRooms";
 import { KeycloakContext } from "../../../KeycloakContext";
 
 import Table from "../../TableComponents/Table";

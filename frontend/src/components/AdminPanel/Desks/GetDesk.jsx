@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { KeycloakContext } from "../../../KeycloakContext";
 
 import { fetchDesk } from "../../../utils/fetchData/AdminData/fetchDesk";
-import { fetchRooms } from "../../../utils/fetchData/AdminData/fetchRooms";
+import { fetchRooms } from "../../../utils/fetchData/fetchRooms";
 import { getRoomAlias } from "../../../utils/mapRoomDesk";
 
 import Table from "../../TableComponents/Table";

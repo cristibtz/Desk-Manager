@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchRooms } from "../../../utils/fetchData/AdminData/fetchRooms";
+import { fetchRooms } from "../../../utils/fetchData/fetchRooms";
 import Table from "../../TableComponents/Table";
 import TableCell from "../../TableComponents/TableCell";
 import Pagination from "../../TableComponents/Pagination";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { fetchDesks } from "../../../utils/fetchData/AdminData/fetchDesks";
-import { fetchRooms } from "../../../utils/fetchData/AdminData/fetchRooms";
+import { fetchDesks } from "../../../utils/fetchData/fetchDesks";
+import { fetchRooms } from "../../../utils/fetchData/fetchRooms";
 import { getRoomAlias } from "../../../utils/mapRoomDesk";
 
 import Table from "../../TableComponents/Table";

@@ -7,7 +7,7 @@ const { Op } = require('sequelize');
 const { param, body, validationResult } = require('express-validator');
 
 exports.createReservationByAdmin = [
-    body('user_id').isInt().withMessage('User ID must be an integer'),
+    body('user_id').isString().withMessage('User ID must be a string'),
     body('room_id').isInt().withMessage('Room ID must be an integer'),
     body('desk_id').isInt().withMessage('Desk ID must be an integer'),
     body('start_date').isISO8601().withMessage('Start date must be a valid ISO 8601 date'),
