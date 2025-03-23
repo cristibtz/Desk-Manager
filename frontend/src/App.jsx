@@ -2,8 +2,13 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Landing from './components/Landing/Landing';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import OccupiedDesks from './components/OccupiedDesks/OccupiedDesks';
 import GetReservation from './components/UserComponents/GetReservation/GetReservation';
+import GetReservationAdmin from './components/AdminPanel/Reservations/GetReservationAdmin';
+import GetUser from './components/AdminPanel/Users/GetUser';
+import GetUserReservations from './components/AdminPanel/Users/GetUserReservations';
+
 import NavBar from './components/NavBar/NavBar';
 import AdminPanel from "./components/AdminPanel/AdminPanel"
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -42,6 +47,24 @@ function App() {
               <Route path="user/reservations/:id" element={
                 <ProtectedRoute>
                   <GetReservation />
+                </ProtectedRoute>
+              } />
+
+              <Route path="reservations/:id" element={
+                <ProtectedRoute>
+                  <GetReservationAdmin />
+                </ProtectedRoute>
+              } />
+
+              <Route path="users/:id" element={
+                <ProtectedRoute>
+                  <GetUser />
+                </ProtectedRoute>
+              } />
+
+              <Route path="users/:id/reservations" element={
+                <ProtectedRoute>
+                  <GetUserReservations />
                 </ProtectedRoute>
               } />
             </Routes>

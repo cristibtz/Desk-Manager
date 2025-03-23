@@ -31,7 +31,7 @@ function AdminPanel() {
       case 'rooms':
         return <Rooms />;
       case 'users':
-        return <Users />;
+        return <Users token={token}/>;
       default:
         return <div className="text-white">Please select a valid resource.</div>;
     }
