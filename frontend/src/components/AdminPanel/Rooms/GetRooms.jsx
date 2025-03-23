@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers } from "../../../utils/fetchData/AdminData/fetchUsers";
+import { fetchRooms } from "../../../utils/fetchData/AdminData/fetchRooms";
 import Table from "../../TableComponents/Table";
 import TableCell from "../../TableComponents/TableCell";
 import Pagination from "../../TableComponents/Pagination";
 
-function GetUsers({ token }) {
-  const [usersData, setUsersData] = useState(null);
+function GetRooms({ token }) {
+  const [roomsData, setRoomsData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
   useEffect(() => {
     if (token) {
-      fetchUsers(token).then(setUsersData);
+      fetchRooms(token).then(setRoomsData);
     }
   }, [token]);
 
-  if (!usersData) {
-    return <p className="text-center text-white">No users found.</p>;
+  if (!roomsData) {
+    return <p className="text-center text-white">No rooms found.</p>;
   }
-  const columns = ["User ID", "Username", "Email", "Reservations"];
+  const columns = ["Room ID", "Room Name", "Room Number", "View Desks"];
 
-  const renderRow = (user) => (
+  const renderRow = (room) => (
     <>
         <TableCell>
-          <a href={`/users/${user.id}`}>{user.id}</a>
+          <a href={`/rooms/${room.id}`}>{room.id}</a>
         </TableCell>
-        <TableCell>{user.username}</TableCell>
-        <TableCell>{user.email}</TableCell>
+        <TableCell>{room.room_alias}</TableCell>
+        <TableCell>{room.room_number}</TableCell>
         <TableCell>
-          <a href={`/users/${user.id}/reservations`}>View Reservations</a>
+          <a href={`/rooms/${room.id}/desks`}>View Desks</a>
         </TableCell>
+        
     </>
   );
 
@@ -37,15 +38,15 @@ function GetUsers({ token }) {
     setCurrentPage(newPage);
   };
 
-  const totalPages = Math.ceil(usersData.length / rowsPerPage);
+  const totalPages = Math.ceil(roomsData.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const currentData = usersData.slice(startIndex, endIndex);
+  const currentData = roomsData.slice(startIndex, endIndex);
 
   return (
     <div>
       <h2 className="text-2xl font-bold text-white underline p-4">
-        Users
+        Rooms
       </h2>
       <div className="table-container">
         <Table columns={columns} data={currentData} renderRow={renderRow} />
@@ -59,4 +60,4 @@ function GetUsers({ token }) {
   );
 }
 
-export default GetUsers;
+export default GetRooms;

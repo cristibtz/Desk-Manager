@@ -8,6 +8,9 @@ import GetReservation from './components/UserComponents/GetReservation/GetReserv
 import GetReservationAdmin from './components/AdminPanel/Reservations/GetReservationAdmin';
 import GetUser from './components/AdminPanel/Users/GetUser';
 import GetUserReservations from './components/AdminPanel/Users/GetUserReservations';
+import GetRoom from './components/AdminPanel/Rooms/GetRoom';
+import GetDesk from './components/AdminPanel/Desks/GetDesk';
+import GetRoomDesks from './components/AdminPanel/Rooms/GetRoomDesks';
 
 import NavBar from './components/NavBar/NavBar';
 import AdminPanel from "./components/AdminPanel/AdminPanel"
@@ -67,7 +70,25 @@ function App() {
                   <GetUserReservations />
                 </ProtectedRoute>
               } />
-            </Routes>
+
+              <Route path="rooms/:room_number" element={
+                <ProtectedRoute>
+                  <GetRoom />
+                </ProtectedRoute>
+              } />
+
+              <Route path="desks/:id" element={
+                <ProtectedRoute>
+                  <GetDesk />
+                </ProtectedRoute>
+              } />
+
+              <Route path="rooms/:id/desks" element={
+                <ProtectedRoute>
+                  <GetRoomDesks />
+                </ProtectedRoute>
+              } />
+            </Routes>    
           </KeycloakProvider>
         } />
       </Routes>

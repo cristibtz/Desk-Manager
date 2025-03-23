@@ -1,10 +1,18 @@
 import React from "react";
+import GetRooms from "./GetRooms";
 
-function Rooms() {
+function Rooms({ token }) {
     return (
-        <div>
-            <h2 className="text-3xl underline font-bold text-white p-4 text-center">Rooms</h2>
+        <div className="bg-[#f37f0c] min-h-screen">
+          <div>
+              <h1 className="text-3xl text-center underline font-bold text-white p-4">
+                Rooms
+              </h1>
+          </div>
+
+          <GetRooms token={token} />
         </div>
+
     );
 }
 

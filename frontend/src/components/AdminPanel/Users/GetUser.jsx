@@ -36,7 +36,7 @@ function GetUser() {
     return (
         <div className="min-h-screen bg-[#f37f0c]">
             <h2 className="text-2xl font-bold text-white underline p-4">
-                Users
+                User
             </h2>
             <div className="table-container">
                 <Table columns={columns} data={[userData]} renderRow={renderRow} />
