@@ -3,3 +3,5 @@
     2.1 Modify admin's on user operations !DONE!
     2.2 Admin can 
 3. Solve migrations problem !DONE!
+4. Fetch user info from Keycloak
+5. Backend filtering, pagination, etc
