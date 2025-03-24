@@ -27,9 +27,9 @@ function AdminPanel() {
       case 'reservations':
         return <Reservations token={token} roomsData={roomsData} desksData={desksData} />;
       case 'desks':
-        return <Desks token={token}/>;
+        return <Desks token={token} roomsData={roomsData}/>;
       case 'rooms':
-        return <Rooms token={token}/>;
+        return <Rooms token={token} roomsData={roomsData}/>;
       case 'users':
         return <Users token={token}/>;
       default:
