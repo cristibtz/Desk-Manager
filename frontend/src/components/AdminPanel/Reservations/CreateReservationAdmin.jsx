@@ -110,7 +110,7 @@ function CreateReservationAdmin({ token, roomsData }) {
                 className="w-full px-4 py-2 border rounded text-gray-700 focus:outline-none"
                 >
                 <option value="" className="text-gray-700 text-center">Select a desk</option>
-                {roomDesksData.map((desk) => (
+                {roomDesksData && roomDesksData.map((desk) => (
                     <option key={desk.id} value={desk.id} className="text-gray-700 text-center">
                     {desk.desk_number}
                     </option>
