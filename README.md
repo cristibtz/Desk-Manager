@@ -202,3 +202,16 @@ docker service logs <NAME>
 
 docker network ls
 ```
+# <i>K3s Deployment</i>
+
+Create cloudflare-secret.yaml
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-key
+  namespace: cert-manager
+type: Opaque
+stringData:
+  api-token: key
+```

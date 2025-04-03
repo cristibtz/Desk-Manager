@@ -1,2 +1,4 @@
 node_modules
 .env
+cloudflare-secret.yaml
+keycloak-values.yaml

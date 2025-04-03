@@ -1,7 +1,2 @@
-1. Dockerize the app !Done!
-2. Implement admin functionality !DONE!
-    2.1 Modify admin's on user operations !DONE!
-3. Solve migrations problem !DONE!
-4. Fetch user info from Keycloak
-5. Backend filtering, pagination, etc
-6. Cant map room name to desks that dont exist
+Create resource-manager database and cristi user
+Configure Keycloak
