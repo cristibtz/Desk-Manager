@@ -23,7 +23,7 @@ services:
       - pg_database
     ports: 
       - "3000:3000"
-    entrypoint: /bin/sh -c "sleep 30 && ./entrypoint.sh"
+    entrypoint: /bin/sh -c "sleep 10 && ./entrypoint.sh"
 
   frontend:
     restart: always
