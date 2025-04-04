@@ -46,7 +46,9 @@ app.use(cors({
   origin: ['http://192.168.100.179:5173', 'http://192.168.100.179', 
            'http://192.168.100.171','http://192.168.100.171:5173',
            'http://192.168.131.33:5173', 'http://192.168.131.33',
-           'http://10.227.0.13:5173', 'http://10.227.0.13'],
+           'http://10.227.0.13:5173', 'http://10.227.0.13',
+           'http://desk-manager.cristian-branet.academy.dvloper.io',
+           'https://desk-manager.cristian-branet.academy.dvloper.io'],
   credentials: true
 }));
 

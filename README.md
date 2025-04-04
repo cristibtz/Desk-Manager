@@ -41,8 +41,8 @@ TEST_USER_PASS=whatever
 KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
 KEYCLOAK_URL="http://localhost:8080/" #Or the IP of the development machine
-KEYCLOAK_SECRET="secret_from_the_oidc_json_file"
 ```
+
 >The user which will access Keycloak via admin-cli must have view-users role assigned
 
 Create tables and use dummy data:

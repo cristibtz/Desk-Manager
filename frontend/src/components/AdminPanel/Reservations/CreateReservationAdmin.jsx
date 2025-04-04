@@ -76,7 +76,7 @@ function CreateReservationAdmin({ token, roomsData }) {
                     className="w-full px-4 py-2 border rounded text-gray-700 focus:outline-none"
                 >
                     <option value="" className="text-gray-700 text-center">Select a user</option>
-                    {usersData.map((user) => (
+                    {usersData && usersData.map((user) => (
                         <option key={user.id} value={user.id} className="text-gray-700 text-center">
                             {user.email}
                         </option>
@@ -93,7 +93,7 @@ function CreateReservationAdmin({ token, roomsData }) {
                 className="w-full px-4 py-2 border rounded text-gray-700 focus:outline-none"
                 >
                 <option value="" className="text-gray-700 text-center">Select a room</option>
-                {roomsData.map((room) => (
+                {roomsData && roomsData.map((room) => (
                     <option key={room.id} value={room.id} className="text-gray-700 text-center">
                     {room.room_alias}
                     </option>

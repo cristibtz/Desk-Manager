@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desk-manager-frontend
+  namespace: desk-manager
+  labels:
+    app: desk-manager-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: desk-manager-frontend
+  template:
+    metadata:
+      labels:
+        app: desk-manager-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: localhost:5000/desk-manager-frontend:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: desk-manager-frontend-service
+  namespace: desk-manager
+  labels:
+    app: desk-manager-frontend
+spec:
+  selector:
+    app: desk-manager-frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: desk-manager-frontend-ingress
+  namespace: desk-manager
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: desk-manager.cristian-branet.academy.dvloper.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: desk-manager-frontend-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - desk-manager.cristian-branet.academy.dvloper.io
+    secretName: desk-manager-certificate-secret
