@@ -14,14 +14,18 @@ build-backend-job:
     - docker:dind
   tags:
     - academy-runner
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Building backend image..."
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin harbor.dvloper.io
     - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
     - echo "Pushing backend image to registry..."
-    - docker login -u '$DOCKER_USERNAME' -p '$DOCKER_PASSWORD' harbor.dvloper.io
     - docker push $DOCKER_IMAGE_BACKEND:latest
     - echo "Backend image successfully pushed to registry."
-  
+  privileged: true
+
 build-frontend-job:
   stage: build
   image: docker:latest
@@ -29,13 +33,17 @@ build-frontend-job:
     - docker:dind
   tags:
     - academy-runner
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Building frontend image..."
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin harbor.dvloper.io
     - docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
     - echo "Pushing frontend image to registry..."
-    - docker login -u '$DOCKER_USERNAME' -p '$DOCKER_PASSWORD' harbor.dvloper.io
     - docker push $DOCKER_IMAGE_FRONTEND:latest
     - echo "Frontend image successfully pushed to registry."
+  privileged: true
 
 
 deploy-job:
