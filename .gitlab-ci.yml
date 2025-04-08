@@ -25,5 +25,5 @@ deploy-job:
     - echo "$KUBE_CONFIG" | base64 -d > kubeconfig
     - export KUBECONFIG=$(pwd)/kubeconfig
     - kubectl get nodes
-    - echo "Deploying application..."
+    - echo "Deploying application.."
     - echo "Application successfully deployed."
