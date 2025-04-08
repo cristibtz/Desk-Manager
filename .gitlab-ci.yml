@@ -10,6 +10,8 @@ variables:
 build-backend-job:     
   stage: build
   image: docker:latest
+  services:
+    - docker:dind
   tags:
     - academy-runner
   script:
@@ -23,6 +25,8 @@ build-backend-job:
 build-frontend-job:
   stage: build
   image: docker:latest
+  services:
+    - docker:dind
   tags:
     - academy-runner
   script:
