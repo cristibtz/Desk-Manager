@@ -10,14 +10,8 @@ variables:
 build-backend-job:     
   stage: build
   image: docker:latest
-  services:
-    - name: docker:dind
-      command: ["--privileged"]
   tags:
     - academy-runner
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Building backend image..."
     - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
@@ -29,14 +23,8 @@ build-backend-job:
 build-frontend-job:
   stage: build
   image: docker:latest
-  services:
-    - name: docker:dind
-      command: ["--privileged"]
   tags:
     - academy-runner
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Building frontend image..."
     - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
