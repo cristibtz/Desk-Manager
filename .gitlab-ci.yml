@@ -13,7 +13,6 @@ build-job:
   tags:
     - academy-runner
   script:
-    - ping -c 3 10.227.0.13
     - echo "Compiling the code..."
     - echo "Compile complete."
 
@@ -23,6 +22,6 @@ deploy-job:
   tags:
     - academy-runner
   script:
-    - echo $KUBECONFIG
+    - cat $KUBECONFIG
     - echo "Deploying application..."
     - echo "Application successfully deployed."
