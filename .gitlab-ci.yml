@@ -5,6 +5,8 @@ stages:
 
 build-job:     
   stage: build
+  tags:
+    - academy-runner
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
