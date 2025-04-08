@@ -14,3 +14,10 @@ build-job:
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
+
+deploy-job:
+  stage: deploy
+  tags:
+    - academy-runner
+  script:
+    - kubectl get nodes
