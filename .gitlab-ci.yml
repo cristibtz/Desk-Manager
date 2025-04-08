@@ -11,7 +11,8 @@ build-backend-job:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      command: ["--privileged"]
   tags:
     - academy-runner
   variables:
@@ -24,13 +25,13 @@ build-backend-job:
     - echo "Pushing backend image to registry..."
     - docker push $DOCKER_IMAGE_BACKEND:latest
     - echo "Backend image successfully pushed to registry."
-  privileged: true
 
 build-frontend-job:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      command: ["--privileged"]
   tags:
     - academy-runner
   variables:
@@ -43,7 +44,6 @@ build-frontend-job:
     - echo "Pushing frontend image to registry..."
     - docker push $DOCKER_IMAGE_FRONTEND:latest
     - echo "Frontend image successfully pushed to registry."
-  privileged: true
 
 
 deploy-job:
