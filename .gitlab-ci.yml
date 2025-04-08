@@ -23,6 +23,6 @@ deploy-job:
   tags:
     - academy-runner
   script:
+    - echo $KUBECONFIG
     - echo "Deploying application..."
     - echo "Application successfully deployed."
-    - kubectl --insecure-skip-tls-verify=true get nodes
