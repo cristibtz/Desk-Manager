@@ -20,7 +20,7 @@ build-backend-job:
     DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Building backend image..."
-    - echo '$DOCKER_PASSWORD' | docker login -u cristian.gabriel.branet --password-stdin harbor.dvloper.io
+    - docker login -u cristian.gabriel.branet '$DOCKER_PASSWORD' harbor.dvloper.io
     - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
     - echo "Pushing backend image to registry..."
     - docker push $DOCKER_IMAGE_BACKEND:latest
@@ -39,7 +39,7 @@ build-frontend-job:
     DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Building frontend image..."
-    - echo '$DOCKER_PASSWORD' | docker login -u cristian.gabriel.branet --password-stdin harbor.dvloper.io
+    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
     - docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
     - echo "Pushing frontend image to registry..."
     - docker push $DOCKER_IMAGE_FRONTEND:latest
