@@ -1,7 +1,10 @@
 stages:     
   - build
-  - test
   - deploy
+
+variables:
+  DOCKER_IMAGE_FRONTEND: "harbor.dvloper.io/desk-manager/desk-manager-frontend"
+  DOCKER_IMAGE_BACKEND: "harbor.dvloper.io/desk-manager/desk-manager-backend"
 
 build-job:     
   stage: build
@@ -14,6 +17,7 @@ build-job:
 
 deploy-job:
   stage: deploy
+  image: bitnami/kubectl:latest
   tags:
     - academy-runner
   script:
