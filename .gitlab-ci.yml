@@ -5,9 +5,11 @@ stages:
 variables:
   DOCKER_IMAGE_FRONTEND: "harbor.dvloper.io/desk-manager/desk-manager-frontend"
   DOCKER_IMAGE_BACKEND: "harbor.dvloper.io/desk-manager/desk-manager-backend"
+  
 
 build-job:     
   stage: build
+  image: docker:latest
   tags:
     - academy-runner
   script:
@@ -23,4 +25,4 @@ deploy-job:
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
-    - kubectl get nodes
+    - kubectl cluster-info
