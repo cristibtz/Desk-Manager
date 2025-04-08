@@ -17,7 +17,7 @@ build-backend-job:
   script:
     - echo "Building backend image..."
     - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
+    - sudo docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
     - echo "Pushing backend image to registry..."
     - docker push $DOCKER_IMAGE_BACKEND:latest
     - echo "Backend image successfully pushed to registry."
