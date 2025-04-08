@@ -25,4 +25,4 @@ deploy-job:
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
-    - kubectl get pods -n desk-manager --insecure-skip-tls-verify -v=9
+    - kubectl get pods -n desk-manager -v=9 --insecure-skip-tls-verify=true
