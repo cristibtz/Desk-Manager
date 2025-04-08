@@ -8,6 +8,7 @@ build-job:
   tags:
     - academy-runner
   script:
+    - ping 10.227.0.13
     - echo "Compiling the code..."
     - echo "Compile complete."
 
