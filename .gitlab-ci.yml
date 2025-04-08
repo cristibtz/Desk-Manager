@@ -23,8 +23,6 @@ deploy-job:
   tags:
     - academy-runner
   script:
-    - echo "$KUBE_CONFIG" > ~/.kube/config
-    - export KUBECONFIG=~/.kube/config
-    - kubectl get node -v=10
+    - echo "$KUBE_CONFIG"
     - echo "Deploying application.."
     - echo "Application successfully deployed."
