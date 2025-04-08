@@ -15,9 +15,11 @@ spec:
       labels:
         app: desk-manager-frontend
     spec:
+      imagePullSecrets:
+      - name: harbor-credentials
       containers:
       - name: frontend
-        image: harbor.dvloper.io/desk-manager/desk-manager-frontend:latest
+        image: harbor.dvloper.io/desk-manager-cristian-branet/desk-manager-frontend:latest
         ports:
         - containerPort: 80
         env:
@@ -73,7 +75,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-  - host: desk-manager.cristian-branet.academy.dvloper.io
+  - host: desk-manager.cbranet.academy.dvloper.io
     http:
       paths:
       - path: /
@@ -85,5 +87,5 @@ spec:
               number: 80
   tls:
   - hosts:
-    - desk-manager.cristian-branet.academy.dvloper.io
+    - desk-manager.cbranet.academy.dvloper.io
     secretName: desk-manager-certificate-secret

@@ -3,19 +3,36 @@ stages:
   - deploy
 
 variables:
-  DOCKER_IMAGE_FRONTEND: "harbor.dvloper.io/desk-manager/desk-manager-frontend"
-  DOCKER_IMAGE_BACKEND: "harbor.dvloper.io/desk-manager/desk-manager-backend"
+  DOCKER_IMAGE_FRONTEND: "harbor.dvloper.io/desk-manager-cristian-branet/desk-manager-frontend"
+  DOCKER_IMAGE_BACKEND: "harbor.dvloper.io/desk-manager-cristian-branet/desk-manager-backend"
   
 
-build-job:     
+build-backend-job:     
   stage: build
   image: docker:latest
   tags:
     - academy-runner
   script:
-    - ping -c 3 10.227.0.13
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - echo "Building backend image..."
+    - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
+    - echo "Pushing backend image to registry..."
+    - docker login -u '$DOCKER_USERNAME' -p '$DOCKER_PASSWORD' harbor.dvloper.io
+    - docker push $DOCKER_IMAGE_BACKEND:latest
+    - echo "Backend image successfully pushed to registry."
+  
+build-frontend-job:
+  stage: build
+  image: docker:latest
+  tags:
+    - academy-runner
+  script:
+    - echo "Building frontend image..."
+    - docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
+    - echo "Pushing frontend image to registry..."
+    - docker login -u '$DOCKER_USERNAME' -p '$DOCKER_PASSWORD' harbor.dvloper.io
+    - docker push $DOCKER_IMAGE_FRONTEND:latest
+    - echo "Frontend image successfully pushed to registry."
+
 
 deploy-job:
   stage: deploy
@@ -24,6 +41,6 @@ deploy-job:
     - academy-runner
   script:
     - echo "$KUBE_CONFIG" > /.kube/config
-    - kubectl get nodes -v=9
-    - echo "Deploying application.."
+    - kubectl get nodes
+    - echo "Deploying application..."
     - echo "Application successfully deployed."

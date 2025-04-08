@@ -17,5 +17,5 @@ spec:
       reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
       reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "hello-world,desk-manager,keycloak"
   dnsNames:
-  - cristian-branet.academy.dvloper.io
-  - "*.cristian-branet.academy.dvloper.io"
+  - cbranet.academy.dvloper.io
+  - "*.cbranet.academy.dvloper.io"
