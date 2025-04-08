@@ -11,9 +11,9 @@ build-backend-job:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://localhost:2375
+    - name: docker:27-dind
+      alias: docker
+      command: ["--tls=false"]
   tags:
     - academy-runner
   script:
@@ -28,9 +28,9 @@ build-frontend-job:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://localhost:2375
+    - name: docker:27-dind
+      alias: docker
+      command: ["--tls=false"]
   tags:
     - academy-runner
   script:
