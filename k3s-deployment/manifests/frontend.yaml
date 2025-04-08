@@ -17,9 +17,35 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: localhost:5000/desk-manager-frontend:latest
+        image: harbor.dvloper.io/desk-manager/desk-manager-frontend:latest
         ports:
         - containerPort: 80
+        env:
+        - name: VITE_KEYCLOAK_URL
+          valueFrom:
+            secretKeyRef:
+              name: frontend-secrets
+              key: VITE_KEYCLOAK_URL
+        - name: VITE_KEYCLOAK_REALM
+          valueFrom:
+            secretKeyRef:
+              name: frontend-secrets
+              key: VITE_KEYCLOAK_REALM
+        - name: VITE_KEYCLOAK_CLIENT
+          valueFrom:
+            secretKeyRef:
+              name: frontend-secrets
+              key: VITE_KEYCLOAK_CLIENT
+        - name: VITE_BACKEND_API_URL
+          valueFrom:
+            secretKeyRef:
+              name: frontend-secrets
+              key: VITE_BACKEND_API_URL
+        - name: VITE_REQUIRED_ROLE
+          valueFrom:
+            secretKeyRef:
+              name: frontend-secrets
+              key: VITE_REQUIRED_ROLE
 ---
 apiVersion: v1
 kind: Service

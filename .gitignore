@@ -3,3 +3,4 @@ node_modules
 cloudflare-secret.yaml
 keycloak-values.yaml
 backend-secrets.yaml
+frontend-secrets.yaml

@@ -36,7 +36,7 @@ function App() {
               } />
               
               <Route path="admin" element={
-                <ProtectedRoute requiredRole={import.meta.env.VITE_REQUIRED_ROLE}>
+                <ProtectedRoute requiredRole={window.env.VITE_REQUIRED_ROLE}>
                   <AdminPanel />
                 </ProtectedRoute>
               } />

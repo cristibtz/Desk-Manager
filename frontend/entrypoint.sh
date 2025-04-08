@@ -1,0 +1,10 @@
+#!/bin/sh
+echo "window.env = {
+  VITE_KEYCLOAK_URL: \"${VITE_KEYCLOAK_URL}\",
+  VITE_BACKEND_API_URL: \"${VITE_BACKEND_API_URL}\",
+  VITE_KEYCLOAK_REALM: \"${VITE_KEYCLOAK_REALM}\",
+  VITE_KEYCLOAK_CLIENT: \"${VITE_KEYCLOAK_CLIENT}\",
+  VITE_REQUIRED_ROLE: \"${VITE_REQUIRED_ROLE}\"
+};" > /usr/share/nginx/html/env.js
+
+exec "$@"

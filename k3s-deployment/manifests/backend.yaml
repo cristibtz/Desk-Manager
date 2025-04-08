@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: localhost:5000/desk-manager-backend:latest
+        image: harbor.dvloper.io/desk-manager/desk-manager-backend:latest
         ports:
         - containerPort: 3000
         command: ["/bin/sh"]
