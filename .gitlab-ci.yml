@@ -10,44 +10,51 @@ variables:
 build-backend-job:     
   stage: build
   image: docker:latest
-  services:
-    - name: docker:27-dind
-      alias: docker
-      command: ["--tls=false"]
   tags:
     - academy-runner
   script:
     - echo "Building backend image..."
-    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
+    #- docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
+    #- docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
     - echo "Pushing backend image to registry..."
-    - docker push $DOCKER_IMAGE_BACKEND:latest
+    #- docker push $DOCKER_IMAGE_BACKEND:latest
     - echo "Backend image successfully pushed to registry."
 
 build-frontend-job:
   stage: build
   image: docker:latest
-  services:
-    - name: docker:27-dind
-      alias: docker
-      command: ["--tls=false"]
   tags:
     - academy-runner
   script:
     - echo "Building frontend image..."
-    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    - docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
+    #- docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
+    #- docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
     - echo "Pushing frontend image to registry..."
-    - docker push $DOCKER_IMAGE_FRONTEND:latest
+    #- docker push $DOCKER_IMAGE_FRONTEND:latest
     - echo "Frontend image successfully pushed to registry."
 
-deploy-job:
+deploy-backend-job:
   stage: deploy
   image: bitnami/kubectl:latest
   tags:
     - academy-runner
   script:
     - echo "$KUBE_CONFIG" > /.kube/config
-    - kubectl get nodes
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    - echo "Deploying backend application..."
+    - kubectl delete pods -l app=desk-manager-backend -n desk-manager
+    - kubectl apply -f k3s-deployment/manifests/backend.yaml
+    - kubectl rollout status deployment/desk-manager-backend -n desk-manager
+    - echo "Backend application successfully deployed."
+
+deploy-frontend-job:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  tags:
+    - academy-runner
+  script:
+    - echo "$KUBE_CONFIG" > /.kube/config
+    - echo "Deploying frontend application..."
+    - kubectl delete pods -l app=desk-manager-frontend -n desk-manager
+    - kubectl apply -f k3s-deployment/manifests/frontend.yaml
+    - kubectl rollout status deployment/desk-manager-frontend -n desk-manager
+    - echo "Frontend application successfully deployed."
