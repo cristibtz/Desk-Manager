@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const userControllerGet = require('../../controllers/userControllers/userControllerGet');
-
+const userControllersGet = require('../../controllers/userControllers/userControllersGet.js');
+const reservationControllersGet = require('../../controllers/reservationControllers/reservationControllersGet.js');
 const { keycloak, exported_session } = require('../../auth/auth.js');
 
 router.use(exported_session);
 
 router.use(keycloak.middleware());
-const checkUserRole = keycloak.protect('realm:user');
+const checkAdminRole = keycloak.protect('realm:admin');
 
-router.get('/user/reservations', checkUserRole, userControllerGet.getUserReservations);
-router.get('/user/reservations/:reservation_id', checkUserRole, userControllerGet.getUserReservation);
-router.get('/occupied', checkUserRole, userControllerGet.occupied);
-
+//User routes
+router.get('/users/', checkAdminRole, userControllersGet.fetchUsers);
+router.get('/users/:user_id/reservations', checkAdminRole, reservationControllersGet.getUserReservationsByAdmin);
+router.get('/users/:user_id', checkAdminRole, userControllersGet.fetchUser);
 module.exports = router;

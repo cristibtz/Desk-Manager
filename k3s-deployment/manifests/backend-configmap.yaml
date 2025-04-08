@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: desk-manager-backend-config
+  namespace: desk-manager
+data:
+  DB_HOST: "10.227.0.13"
+  DB_PORT: "5432"
+  DB_NAME: "resource-manager"
+  APP_SECRET: "secret"
+  APP_URL: "https://keycloak.cristian-branet.academy.dvloper.io"
+  KEYCLOAK_REALM: "resource-manager"
+  KEYCLOAK_CLIENT: "resource-manager"
+  KEYCLOAK_URL: "https://keycloak.cristian-branet.academy.dvloper.io"

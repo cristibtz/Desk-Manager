@@ -1,0 +1,59 @@
+services:
+  pg_database:
+    image: postgres:latest
+    volumes: 
+      - postgres-data-stack:/var/lib/postgresql/data
+    secrets:
+      - pg_db_name
+      - pg_db_user
+      - pg_db_pass
+    environment:
+      - POSTGRES_DB_FILE=/run/secrets/pg_db_name
+      - POSTGRES_USER_FILE=/run/secrets/pg_db_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pg_db_pass
+    networks:
+      - desk-manager-stack
+    deploy:
+      replicas: 1
+
+  backend:
+    image: localhost:5000/desk-manager-backend:latest
+    volumes:
+      - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
+    networks: 
+      - desk-manager-stack
+    depends_on:
+      - pg_database
+    ports: 
+      - "3000:3000"
+    entrypoint: /bin/sh -c "sleep 10 && ./entrypoint.sh"
+    deploy:
+      replicas: 3
+
+  frontend:
+    image: localhost:5000/desk-manager-frontend:latest
+    networks: 
+      - desk-manager-stack
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 3
+
+networks: 
+  desk-manager-stack:
+    name: desk-manager-stack
+    driver: overlay
+    attachable: true
+
+volumes:
+  postgres-data-stack:
+
+secrets:
+  pg_db_name:
+    external: true
+  pg_db_user:
+    external: true
+  pg_db_pass:
+    external: true

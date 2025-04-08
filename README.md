@@ -41,10 +41,8 @@ TEST_USER_PASS=whatever
 KEYCLOAK_REALM="resource-manager"
 KEYCLOAK_CLIENT="resource-manager"
 KEYCLOAK_URL="http://localhost:8080/" #Or the IP of the development machine
-KEYCLOAK_SECRET="secret_from_the_oidc_json_file"
-KEYCLOAK_CLI_ADMIN="user_with_admin_role_of_the_resource-manager_app"
-KEYCLOAK_CLI_ADMIN_PASS=PASSWORD
 ```
+
 >The user which will access Keycloak via admin-cli must have view-users role assigned
 
 Create tables and use dummy data:
@@ -165,3 +163,55 @@ Also, add:
 in `package.json` scripts objects.
 
 Then, run in frontend folder `npx vitest` or `npm run test`.
+
+# <i>Dockerization</i>
+
+There are 2 compose files, one for local deployment and one for swarm deployment
+
+Docker command for initial setup
+
+```
+docker swarm init --advertise-addr <IP>
+
+docker service create --name registry --publish published=5000,target=5000 registry:2
+
+docker build -t desk-manager-backend:latest backend/
+docker build -t desk-manager-frontend:latest frontend/
+
+docker tag desk-manager-backend:latest localhost:5000/desk-manager-backend:latest
+docker tag desk-manager-frontend:latest localhost:5000/desk-manager-frontend:latest
+
+docker push localhost:5000/desk-manager-backend:latest
+docker push localhost:5000/desk-manager-frontend:latest
+
+docker network create --driver overlay desk-manager-stack
+
+Create secrets
+echo "your_db_name" | docker secret create pg_db_name -
+echo "your_db_user" | docker secret create pg_db_user -
+echo "your_db_pass" | docker secret create pg_db_pass -
+
+docker stack deploy -c docker-compose-stack.yml desk-manager
+```
+
+Commands for management
+```
+docker service ls
+
+docker service logs <NAME>
+
+docker network ls
+```
+# <i>K3s Deployment</i>
+
+Create cloudflare-secret.yaml
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-key
+  namespace: cert-manager
+type: Opaque
+stringData:
+  api-token: key
+```

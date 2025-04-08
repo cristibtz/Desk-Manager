@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desk-manager-backend
+  namespace: desk-manager
+  labels:
+    app: desk-manager-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: desk-manager-backend
+  template:
+    metadata:
+      labels:
+        app: desk-manager-backend
+    spec:
+      containers:
+      - name: backend
+        image: harbor.dvloper.io/desk-manager/desk-manager-backend:latest
+        ports:
+        - containerPort: 3000
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 10 && ./entrypoint.sh"]
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: DB_PORT
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: desk-manager-backend-secret
+              key: DB_USER
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: desk-manager-backend-secret
+              key: DB_PASS
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: DB_NAME
+        - name: APP_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: APP_SECRET
+        - name: APP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: APP_URL
+        - name: TEST_USER
+          valueFrom:
+            secretKeyRef:
+              name: desk-manager-backend-secret
+              key: TEST_USER
+        - name: TEST_USER_PASS
+          valueFrom:
+            secretKeyRef:
+              name: desk-manager-backend-secret
+              key: TEST_USER_PASS
+        - name: KEYCLOAK_REALM
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: KEYCLOAK_REALM
+        - name: KEYCLOAK_CLIENT
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: KEYCLOAK_CLIENT
+        - name: KEYCLOAK_URL
+          valueFrom:
+            configMapKeyRef:
+              name: desk-manager-backend-config
+              key: KEYCLOAK_URL
+        - name: NODE_TLS_REJECT_UNAUTHORIZED
+          value: "0"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: desk-manager-backend-service
+  namespace: desk-manager
+  labels:
+    app: desk-manager-backend
+spec:
+  selector:
+    app: desk-manager-backend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: desk-manager-backend-ingress
+  namespace: desk-manager
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: backend.cristian-branet.academy.dvloper.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: desk-manager-backend-service
+            port:
+              number: 3000
+  tls:
+  - hosts:
+    - backend.cristian-branet.academy.dvloper.io
+    secretName: desk-manager-certificate-secret

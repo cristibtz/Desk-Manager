@@ -1,0 +1,2 @@
+Create resource-manager database and cristi user
+Configure Keycloak

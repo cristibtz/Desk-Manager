@@ -10,7 +10,7 @@ function NavBar() {
     setNav(!nav);
   };
 
-  const requiredRole = import.meta.env.VITE_REQUIRED_ROLE;
+  const requiredRole = window.env.VITE_REQUIRED_ROLE;
 
   return (
     <nav className="bg-white flex justify-between items-center h-32 max-w-auto mx-auto px-2 text-white whitespace-nowrap">

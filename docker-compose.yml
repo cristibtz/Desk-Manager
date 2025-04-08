@@ -1,0 +1,45 @@
+services:
+  pg_database:
+    restart: always
+    image: postgres:latest
+    volumes: 
+      - postgres-data:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - desk-manager
+
+  backend:
+    restart: always
+    container_name: desk-manager-backend
+    build: ./backend
+    volumes:
+      - ./backend/ran_migrations:/desk-manager-backend/ran_migrations
+    networks: 
+      - desk-manager
+    depends_on:
+      - pg_database
+    ports: 
+      - "3000:3000"
+    entrypoint: /bin/sh -c "sleep 10 && ./entrypoint.sh"
+
+  frontend:
+    restart: always
+    container_name: desk-manager-frontend
+    build: ./frontend
+    networks: 
+      - desk-manager
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+networks: 
+  desk-manager:
+    name: desk-manager
+    driver: bridge
+
+volumes:
+  postgres-data:

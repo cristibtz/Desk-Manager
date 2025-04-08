@@ -8,17 +8,22 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json')
 const bodyParser = require('body-parser')
 
-const publicGetRoutes = require('./routes/publicRoutes/publicGetRoutes.js');
+const userGetRoutes = require('./routes/userRoutes/userGetRoutes.js');
 
-const adminGetRoutes = require('./routes/adminRoutes/adminGetRoutes');
-const adminPostRoutes = require('./routes/adminRoutes/adminPostRoutes');
-const adminDeleteRoutes = require('./routes/adminRoutes/adminDeleteRoutes');
+const roomGetRoutes = require('./routes/roomRoutes/roomGetRoutes.js');
+const deskGetRoutes = require('./routes/deskRoutes/deskGetRoutes.js');
+const reservationGetRoutes = require('./routes/reservationRoutes/reservationGetRoutes.js');
 
-const userGetRoutes = require('./routes/userRoutes/userGetRoutes');
-const userPostRoutes = require('./routes/userRoutes/userPostRoutes');
-const userDeleteRoutes = require('./routes/userRoutes/userDeleteRoutes');
+const roomPostRoutes = require('./routes/roomRoutes/roomPostRoutes.js');
+const deskPostRoutes = require('./routes/deskRoutes/deskPostRoutes.js');
+const reservationPostRoutes = require('./routes/reservationRoutes/reservationPostRoutes.js');
 
-const routes = [adminDeleteRoutes, adminGetRoutes, adminPostRoutes, userDeleteRoutes, userGetRoutes, userPostRoutes, publicGetRoutes];
+const roomDeleteRoutes = require('./routes/roomRoutes/roomDeleteRoutes.js');
+const deskDeleteRoutes = require('./routes/deskRoutes/deskDeleteRoutes.js');
+const reservationDeleteRoutes = require('./routes/reservationRoutes/reservationDeleteRoutes.js');
+
+
+const routes = [userGetRoutes, roomGetRoutes, deskGetRoutes, reservationGetRoutes, roomPostRoutes, deskPostRoutes, reservationPostRoutes, roomDeleteRoutes, deskDeleteRoutes, reservationDeleteRoutes];
 
 const app = express()
 const port = 3000
@@ -38,24 +43,17 @@ app.use( keycloak.middleware({
 
 //CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://192.168.100.179:5173'],
+  origin: ['http://192.168.100.179:5173', 'http://192.168.100.179', 
+           'http://192.168.100.171','http://192.168.100.171:5173',
+           'http://192.168.131.33:5173', 'http://192.168.131.33',
+           'http://10.227.0.13:5173', 'http://10.227.0.13',
+           'http://desk-manager.cristian-branet.academy.dvloper.io',
+           'https://desk-manager.cristian-branet.academy.dvloper.io'],
   credentials: true
 }));
 
 //Routes
 app.use(routes);
-
-/*
-app.get('/', keycloak.protect(), async (req, res) => {
-
-  userInfo = await getUserInfoFromTokenHeader(req);
-
-  const name = userInfo.name;
-  const role = userInfo.roles.includes('admin') ? 'admin' : 'user';
-
-  res.status(200).render('home', {role: role, name: name});
-});
-*/
 
 app.get('/userinfo', keycloak.protect(), async (req, res) => {
 
