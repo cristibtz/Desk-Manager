@@ -28,9 +28,9 @@ build-frontend-job:
   tags:
     - academy-runner
   script:
-    #- echo "{\"auths\":{\"harbor.dvloper.io\":{\"username\":\"$DOCKER_USERNAME\",\"password\":\"$DOCKER_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    #- echo "Building frontend image with Kaniko..."
-    #- /kaniko/executor --context ./frontend --dockerfile ./frontend/Dockerfile --destination $DOCKER_IMAGE_FRONTEND:latest
+    - echo "{\"auths\":{\"harbor.dvloper.io\":{\"username\":\"$DOCKER_USERNAME\",\"password\":\"$DOCKER_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "Building frontend image with Kaniko..."
+    - /kaniko/executor --context ./frontend --dockerfile ./frontend/Dockerfile --destination $DOCKER_IMAGE_FRONTEND:latest
     - echo "Frontend image successfully built and pushed to registry."
 
 deploy-backend-job:
