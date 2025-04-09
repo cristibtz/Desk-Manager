@@ -9,7 +9,7 @@ variables:
 
 build-backend-job:     
   stage: build
-  image: gcr.io/kaniko-project/executor:latest
+  #image: gcr.io/kaniko-project/executor:latest
   tags:
     - academy-runner
   script:
@@ -20,7 +20,7 @@ build-backend-job:
 
 build-frontend-job:
   stage: build
-  image: gcr.io/kaniko-project/executor:latest
+  #image: gcr.io/kaniko-project/executor:latest
   tags:
     - academy-runner
   script:
