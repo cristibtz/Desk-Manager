@@ -4,7 +4,7 @@ function Landing() {
 
   return (
     <h1 className="text-center text-4xl">
-      Hello!
+      Hello!x
     </h1>
   );
 }
