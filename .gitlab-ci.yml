@@ -5,37 +5,29 @@ stages:
 variables:
   DOCKER_IMAGE_FRONTEND: "harbor.dvloper.io/desk-manager-cristian-branet/desk-manager-frontend"
   DOCKER_IMAGE_BACKEND: "harbor.dvloper.io/desk-manager-cristian-branet/desk-manager-backend"
-  
+  DOCKER_CONFIG: /kaniko/.docker/
 
 build-backend-job:     
   stage: build
-  image: docker:latest
-  services:
-    - docker:dind
+  image: gcr.io/kaniko-project/executor:latest
   tags:
     - academy-runner
   script:
-    - echo "Building backend image..."
-    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
-    - echo "Pushing backend image to registry..."
-    - docker push $DOCKER_IMAGE_BACKEND:latest
-    - echo "Backend image successfully pushed to registry."
+    - echo "{\"auths\":{\"harbor.dvloper.io\":{\"username\":\"$DOCKER_USERNAME\",\"password\":\"$DOCKER_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "Building backend image with Kaniko..."
+    - /kaniko/executor --context ./backend --dockerfile ./backend/Dockerfile --destination $DOCKER_IMAGE_BACKEND:latest
+    - echo "Backend image successfully built and pushed to registry."
 
 build-frontend-job:
   stage: build
-  image: docker:latest
-  services:
-    - docker:dind
+  image: gcr.io/kaniko-project/executor:latest
   tags:
     - academy-runner
   script:
-    - echo "Building frontend image..."
-    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    - docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
-    - echo "Pushing frontend image to registry..."
-    - docker push $DOCKER_IMAGE_FRONTEND:latest
-    - echo "Frontend image successfully pushed to registry."
+    - echo "{\"auths\":{\"harbor.dvloper.io\":{\"username\":\"$DOCKER_USERNAME\",\"password\":\"$DOCKER_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "Building frontend image with Kaniko..."
+    - /kaniko/executor --context ./frontend --dockerfile ./frontend/Dockerfile --destination $DOCKER_IMAGE_FRONTEND:latest
+    - echo "Frontend image successfully built and pushed to registry."
 
 deploy-backend-job:
   stage: deploy
