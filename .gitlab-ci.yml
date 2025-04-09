@@ -14,10 +14,10 @@ build-backend-job:
     - academy-runner
   script:
     - echo "Building backend image..."
-    #- docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    #- docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
+    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
+    - docker build -t $DOCKER_IMAGE_BACKEND:latest ./backend
     - echo "Pushing backend image to registry..."
-    #- docker push $DOCKER_IMAGE_BACKEND:latest
+    - docker push $DOCKER_IMAGE_BACKEND:latest
     - echo "Backend image successfully pushed to registry."
 
 build-frontend-job:
@@ -27,10 +27,10 @@ build-frontend-job:
     - academy-runner
   script:
     - echo "Building frontend image..."
-    #- docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
-    #- docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
+    - docker login -u cristian.gabriel.branet -p $DOCKER_PASSWORD harbor.dvloper.io
+    - docker build -t $DOCKER_IMAGE_FRONTEND:latest ./frontend
     - echo "Pushing frontend image to registry..."
-    #- docker push $DOCKER_IMAGE_FRONTEND:latest
+    - docker push $DOCKER_IMAGE_FRONTEND:latest
     - echo "Frontend image successfully pushed to registry."
 
 deploy-backend-job:
