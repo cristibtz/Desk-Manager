@@ -4,7 +4,7 @@ The project focuses on developing a "Resource Manager" application for managing 
 
 # Repo setup for development
 ```
-git clone git@gitlab.intranet.dvloper.io:mario.boro/resource-manager.git
+git clone REPO
 git branch dev
 git checkout dev
 git push -u origin dev
