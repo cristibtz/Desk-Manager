@@ -215,5 +215,3 @@ type: Opaque
 stringData:
   api-token: key
 ```
-
-***TO BE ADDED***
