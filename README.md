@@ -1,6 +1,6 @@
-# Resource Manager
+# Desk Manager
 
-The project focuses on developing a "Resource Manager" application for managing shared resources such as meeting rooms or laboratory equipment.
+The project focuses on developing a "Desk Manager" application for managing shared resources such as rooms or desks.
 
 # Repo setup for development
 ```
