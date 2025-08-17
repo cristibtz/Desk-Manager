@@ -1,5 +1,7 @@
 # Desk Manager
 
+![Animation](Animation.gif)
+
 The project focuses on developing a "Desk Manager" application for managing shared resources such as rooms or desks.
 
 # Repo setup for development
